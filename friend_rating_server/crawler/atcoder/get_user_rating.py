@@ -1,9 +1,7 @@
 from typing import Dict, Any
-import logging
 import datetime
 import requests
 from lxml import etree
-from friend_rating_server.util.loading_cache import SchedulerCache
 
 
 def get_competition_history(handle: str) -> Dict[str, Any]:
@@ -38,15 +36,3 @@ def get_competition_history(handle: str) -> Dict[str, Any]:
             "status": "unknown error",
             "exception": e,
         }
-
-
-USER_RATING_CACHE = SchedulerCache(get_competition_history)
-
-if __name__ == "__main__":
-    logging.getLogger().setLevel(20)
-    print(USER_RATING_CACHE.get('ConanYu'))
-    print(USER_RATING_CACHE.get('tourist'))
-    print(USER_RATING_CACHE.get('ConanYu'))
-    print(USER_RATING_CACHE.get('ConanYu'))
-    while True:
-        pass
