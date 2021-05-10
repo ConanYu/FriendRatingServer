@@ -7,8 +7,9 @@ from friend_rating_server.crawler.codeforces.get_user_rating import get_user_rat
 ATCODER_RATING_CACHE = SchedulerCache(get_atcoder_rating)
 CODEFORCES_RATING_CACHE = SchedulerCache(get_codeforces_rating)
 
+
 def code_start_init():
-    members = get_config("memebers")
+    members = get_config("members")
     if members is not None:
         for member in members:
             atcoder_name = member.get("atcoder")
@@ -18,8 +19,10 @@ def code_start_init():
             if codeforces_name is not None:
                 CODEFORCES_RATING_CACHE.get(codeforces_name)
 
+
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
+    code_start_init()
     print(ATCODER_RATING_CACHE.get("ConanYu"))
     print(ATCODER_RATING_CACHE.get("tourist"))
     print(ATCODER_RATING_CACHE.get("ConanYu"))
