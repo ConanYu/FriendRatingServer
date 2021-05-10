@@ -6,8 +6,41 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title }}</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <script src="../static/bootstrap/js/bootstrap.js"></script>
+    <script src="../static/vue/vue.js"></script>
+    <script src="../static/javascript/color.js"></script>
+    <script src="../static/javascript/echarts.min.js"></script>
+    <script src="../static/javascript/generateGragh.js"></script>
 </head>
 <body>
-    {{ text }}
+    <div id="app">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <td>姓名</td>
+                <td>年级</td>
+                <td>Codeforces ID</td>
+                <td>Codeforces Rating</td>
+                <td>AtCoder ID</td>
+                <td>AtCoder Rating</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for member in members %}
+            <tr class="hover-cursor-hand">
+                <td>{{ member.name }}</td>
+                <td>{{ member.grade }}</td>
+                <td>{{ member.codeforces_name }}</td>
+                <td>{{ member.codeforces_rating }}</td>
+                <td>{{ member.atcoder_name }}</td>
+                <td>{{ member.atcoder_rating }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="../static/javascript/index-app.js"></script>
 </body>
 </html>

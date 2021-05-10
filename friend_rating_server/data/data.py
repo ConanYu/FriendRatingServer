@@ -27,6 +27,29 @@ def code_start_init():
 
 code_start_init()
 
+
+def get_member():
+    members = get_config("members")
+    logging.info(members)
+    if members is not None:
+        for member in members:
+            member["atcoder_name"] = member.get("atcoder", "")
+            member["codeforces_name"] = member.get("codeforces", "")
+            if member["atcoder_name"] is not None:
+                atcoder_rating = ATCODER_RATING_CACHE.get(member["atcoder_name"])
+                if atcoder_rating["status"] == "OK":
+                    member["atcoder_data"] = atcoder_rating
+                    if len(atcoder_rating):
+                        member["atcoder_rating"] = atcoder_rating["data"][-1]["new_rating"]
+            if member["codeforces_name"] is not None:
+                codeforces_rating = CODEFORCES_RATING_CACHE.get(member["codeforces_name"])
+                if codeforces_rating["status"] == "OK":
+                    member["codeforces_data"] = codeforces_rating
+                    if len(codeforces_rating["result"]):
+                        member["codeforces_rating"] = codeforces_rating["result"][-1]["newRating"]
+    return members
+
+
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
     print(ATCODER_RATING_CACHE.get("ConanYu"))
