@@ -12,6 +12,7 @@ class SchedulerCache(object):
         self.lock = rwlock.RWLockFairD()
         self.scheduler.add_job(self.__gao, 'interval', seconds=expire)
         threading.Thread(target=self.scheduler.start).start()
+        SchedulerCache.objects.append(self)
 
     def get(self, key):
         update = False
@@ -36,3 +37,10 @@ class SchedulerCache(object):
             logging.info(data[key])
         with self.lock.gen_wlock():
             self.data = data
+
+    @staticmethod
+    def shutdown_all():
+        for obj in SchedulerCache.objects:
+            obj.scheduler.shutdown()
+
+    objects = []

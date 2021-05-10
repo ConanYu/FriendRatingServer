@@ -25,12 +25,18 @@ def code_start_init():
                 NOWCODER_RATING_CACHE.get(nowcoder_name)
 
 
+code_start_init()
+
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
-    code_start_init()
     print(ATCODER_RATING_CACHE.get("ConanYu"))
     print(ATCODER_RATING_CACHE.get("tourist"))
     print(ATCODER_RATING_CACHE.get("ConanYu"))
     print(CODEFORCES_RATING_CACHE.get("ConanYu"))
     print(CODEFORCES_RATING_CACHE.get("ConanYu"))
     print(NOWCODER_RATING_CACHE.get("6693394"))
+    try:
+        while True:
+            pass
+    except KeyboardInterrupt:
+        SchedulerCache.shutdown_all()
