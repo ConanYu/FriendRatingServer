@@ -36,3 +36,7 @@ def get_competition_history(handle: str) -> Dict[str, Any]:
             "status": "unknown error",
             "exception": e,
         }
+
+
+if __name__ == '__main__':
+    print(get_competition_history("ConanYu"))

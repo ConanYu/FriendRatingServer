@@ -15,3 +15,7 @@ def get_user_rating(handle: str) -> dict:
             "status": "unknown error",
             "exception": e,
         }
+
+
+if __name__ == '__main__':
+    print(get_user_rating("ConanYu"))
