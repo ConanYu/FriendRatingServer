@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from friend_rating_server.web import views
+from django.conf import settings
+from django.views import static
 
 urlpatterns = [
     url('^$', views.index),
-    url('reload_config/', views.reload_config),
+    url('^reload_config/', views.reload_config),
+    url(r'^static/(?P<path>.*)$', static.serve,
+          {'document_root': settings.STATIC_ROOT}, name='static'),
 ]
