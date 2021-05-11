@@ -12,8 +12,11 @@ NOWCODER_RATING_CACHE = SchedulerCache(get_nowcoder_rating)
 
 def code_start_init():
     members = get_config("members")
+    index = 0
     if members is not None:
         for member in members:
+            member["index"] = index
+            index += 1
             atcoder_name = member.get("atcoder")
             codeforces_name = member.get("codeforces")
             nowcoder_name = member.get("nowcoder")
@@ -40,13 +43,13 @@ def get_member():
                 if atcoder_rating["status"] == "OK":
                     member["atcoder_data"] = atcoder_rating
                     if len(atcoder_rating):
-                        member["atcoder_rating"] = atcoder_rating["data"][-1]["new_rating"]
+                        member["atcoder_rating"] = atcoder_rating["data"][-1]["rating"]
             if member["codeforces_name"] is not None:
                 codeforces_rating = CODEFORCES_RATING_CACHE.get(member["codeforces_name"])
                 if codeforces_rating["status"] == "OK":
                     member["codeforces_data"] = codeforces_rating
                     if len(codeforces_rating["result"]):
-                        member["codeforces_rating"] = codeforces_rating["result"][-1]["newRating"]
+                        member["codeforces_rating"] = codeforces_rating["result"][-1]["rating"]
     return members
 
 

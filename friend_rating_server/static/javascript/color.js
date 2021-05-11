@@ -51,7 +51,7 @@ function get_line_graph_background_data(ratings, get_color) {
     let color_data = [];
     let visual_map_pieces = [];
     let pre = 0;
-    for (x of ratings) {
+    for (let x of ratings) {
         color_data.push([
             {
                 yAxis: pre.toString(),

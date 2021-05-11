@@ -18,12 +18,11 @@ def get_competition_history(handle: str) -> Dict[str, Any]:
             if performance == '-':
                 continue
             data = {
-                'time': datetime.datetime.strptime(table.xpath('//td[1]/@data-order')[0], '%Y/%m/%d %H:%M:%S'),
+                'timestamp': datetime.datetime.strptime(table.xpath('//td[1]/@data-order')[0],
+                                                   '%Y/%m/%d %H:%M:%S').timestamp(),
                 'name': table.xpath('//td[2]/a[1]')[0].text,
-                'url': table.xpath('//td[2]/a[1]/@href')[0],
-                'rank': table.xpath('//td[3]/a')[0].text,
-                'performance': int(performance),
-                'new_rating': int(table.xpath('//td[5]/span')[0].text),
+                'url': "https://atcoder.jp" + table.xpath('//td[2]/a[1]/@href')[0],
+                'rating': int(table.xpath('//td[5]/span')[0].text),
             }
             ret.append(data)
         return {
@@ -34,6 +33,7 @@ def get_competition_history(handle: str) -> Dict[str, Any]:
     except Exception as e:
         return {
             "status": "unknown error",
+            'data': [],
             "exception": e,
         }
 

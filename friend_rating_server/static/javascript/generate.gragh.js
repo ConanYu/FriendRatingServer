@@ -13,7 +13,7 @@ generateGraph(document.getElementById('main'), [
 */
 function generateGraph(dom, data, oj_name, username) {
     // 基于准备好的dom，初始化echarts实例
-    let myChart = echarts.init(document.getElementById(dom.id));
+    let myChart = echarts.init(dom);
 
     // function unixstampToDate(time) {
     //     console.log(new Date(time * 1000).toLocaleDateString().replaceAll('/', '-'))

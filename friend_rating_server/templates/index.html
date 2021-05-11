@@ -6,17 +6,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/index.css">
-    <script src="../static/bootstrap/js/bootstrap.js"></script>
-    <script src="../static/vue/vue.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/vue/vue.min.js"></script>
     <script src="../static/javascript/color.js"></script>
     <script src="../static/javascript/echarts.min.js"></script>
-    <script src="../static/javascript/generateGragh.js"></script>
+    <script src="../static/javascript/generate.gragh.js"></script>
 </head>
 <body>
     <div id="app">
-        <table class="table table-hover">
+        <table class="table">
             <thead>
             <tr>
                 <td>姓名</td>
@@ -29,7 +29,7 @@
             </thead>
             <tbody>
             {% for member in members %}
-            <tr class="hover-cursor-hand">
+            <tr class="hover-cursor-hand" @click="showCol({{ member.index }})">
                 <td>{{ member.name }}</td>
                 <td>{{ member.grade }}</td>
                 <td>{{ member.codeforces_name }}</td>
@@ -37,10 +37,22 @@
                 <td>{{ member.atcoder_name }}</td>
                 <td>{{ member.atcoder_rating }}</td>
             </tr>
+            <tr v-show="show.graph_{{ member.index }}_show">
+                <td colspan="6">
+                    <button type="button" :class="cls.btn_{{ member.index }}_codeforces" @click="showGraph({{ member.index }}, 'codeforces')">Codeforces</button>
+                    <button type="button" :class="cls.btn_{{ member.index }}_atcoder" @click="showGraph({{ member.index }}, 'atcoder')">AtCoder</button>
+                    <div style="margin: 10px"></div>
+                    <div style="width: 600px; height: 400px;" id="graph-{{ member.index }}-codeforces" v-show="show.graph_{{ member.index }}_codeforces_show"></div>
+                    <div style="width: 600px; height: 400px;" id="graph-{{ member.index }}-atcoder" v-show="show.graph_{{ member.index }}_atcoder_show"></div>
+                </td>
+            </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
+    <script>
+        let members = {{ members | safe }};
+    </script>
     <script src="../static/javascript/index-app.js"></script>
 </body>
 </html>
