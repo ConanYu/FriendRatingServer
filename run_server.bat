@@ -11,6 +11,8 @@ if exist %cd%\FriendRatingServer\venv\Scripts\activate.bat (
         set PYTHONPATH=%PYTHONPATH%;%cd%\FriendRatingServer
     )
     cd FriendRatingServer
+    python friend_rating_server/manage.py collectstatic
+    python friend_rating_server/manage.py migrate
     python friend_rating_server/manage.py runserver localhost:8000
 ) else (
     if "%PYTHONPATH%" == "" (
@@ -19,5 +21,7 @@ if exist %cd%\FriendRatingServer\venv\Scripts\activate.bat (
         set PYTHONPATH=%PYTHONPATH%;%cd%\FriendRatingServer
     )
     cd FriendRatingServer
+    python friend_rating_server/manage.py collectstatic
+    python friend_rating_server/manage.py migrate
     python friend_rating_server/manage.py runserver localhost:8000
 )
