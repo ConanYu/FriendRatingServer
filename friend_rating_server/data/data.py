@@ -37,7 +37,9 @@ def get_member():
             member["index"] = index
             index += 1
             member["atcoder_name"] = member.get("atcoder", "")
+            member["atcoder_profile_url"] = f"https://atcoder.jp/users/{member['atcoder_name']}"
             member["codeforces_name"] = member.get("codeforces", "")
+            member["codeforces_profile_url"] = f"https://codeforces.com/profile/{member['codeforces_name']}"
             if member["atcoder_name"] is not None:
                 atcoder_rating = ATCODER_RATING_CACHE.get(member["atcoder_name"])
                 if atcoder_rating["status"] == "OK":

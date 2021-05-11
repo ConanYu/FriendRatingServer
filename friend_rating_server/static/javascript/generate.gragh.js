@@ -9,7 +9,7 @@ generateGraph(document.getElementById('main'), [
             ["2019-10-27", 721, 721, "AtCoder Beginner Contest 144", "https://atcoder.jp/contests/abc144/standings?watching=cppisgood"],
             ["2020-1-26", 2842, 2842, "AtCoder Beginner Contest 153", "https://atcoder.jp/contests/abc153/standings?watching=cppisgood"],
             ["2020-9-13", 1669, 1669, "AtCoder Beginner Contest 178", "https://atcoder.jp/contests/abc178/standings?watching=cppisgood"]
-        ], 'atcoder', 'cppisgood');
+        ], 'atcoder', 'cppisgood', 'https://atcoder.jp/users/cppisgood');
 */
 function generateGraph(dom, data, oj_name, username, user_info_url='') {
     // 基于准备好的dom，初始化echarts实例

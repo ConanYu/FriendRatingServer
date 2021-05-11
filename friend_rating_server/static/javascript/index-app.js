@@ -42,7 +42,8 @@ function loadGraph() {
                     document.getElementById(graph_id),
                     data,
                     platform,
-                    member[platform + "_name"]);
+                    member[platform + "_name"],
+                    member[platform + "_profile_url"]);
             }
         }
     }
