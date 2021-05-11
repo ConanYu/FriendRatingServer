@@ -1,4 +1,4 @@
-function getAtcoderRatingColor(rating) {
+function getAtcoderRatingColor(rating = 0) {
     if (rating < 400) {
         return "#808080";
     } else if (rating < 800) {
@@ -18,7 +18,7 @@ function getAtcoderRatingColor(rating) {
     }
 }
 
-function getCodeforcesRatingColor(rating) {
+function getCodeforcesRatingColor(rating = 0) {
     if (rating < 1200) {
         return "gray";
     } else if (rating < 1400) {
