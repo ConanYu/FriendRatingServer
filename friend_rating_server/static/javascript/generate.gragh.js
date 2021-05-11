@@ -35,7 +35,6 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
             text: username,
             link: user_info_url,
         },
-        tooltip: {},
         legend: {},
         grid: [
             {
@@ -69,6 +68,16 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
                     x: 0,
                     y: 1,
                 },
+                markPoint: {
+                    symbol: 'circle',
+                    symbolSize: 0,
+                    silent: true,
+                    data: [
+                        {
+                            type: 'max',
+                        }
+                    ]
+                },
                 markArea: {
                     silent: true,
                     data: background_data
@@ -79,14 +88,13 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
             {
                 pieces: visual_map_pieces,
                 left: '0%',
-                top: '25%'
+                top: '25%',
+                dimension: 1
             }
         ],
         tooltip: {
-            padding: 10,
             backgroundColor: '#222',
             borderColor: '#777',
-            borderWidth: 1,
             formatter: function (obj) {
                 var value = obj.value;
                 return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
@@ -94,6 +102,9 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
                     + 'rating: ' + value[1]
             }
         },
+        dataZoom: {
+            type: 'slider'
+        }
     };
 
     myChart.on('click', function (params) {
