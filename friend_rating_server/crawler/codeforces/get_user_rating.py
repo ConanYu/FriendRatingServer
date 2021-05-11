@@ -1,8 +1,10 @@
-import requests
+import logging
 import json
+import requests
 
 
 def get_user_rating(handle: str) -> dict:
+    logging.info(f'crawling codeforces handle: {handle}')
     try:
         rsp = requests.get(f"https://codeforces.com/api/user.rating?handle={handle}")
         result = json.loads(rsp.text)

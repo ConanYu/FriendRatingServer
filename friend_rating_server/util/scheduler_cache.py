@@ -19,14 +19,14 @@ class SchedulerCache(object):
         with self.lock.gen_rlock():
             value = self.data.get(key)
             if value is None:
-                logging.info('start loading')
+                logging.info(f'start loading key {key}')
                 value = self.func(key)
-                logging.info('end loading')
+                logging.info(f'end loading key {key}')
                 update = True
         if update:
             with self.lock.gen_wlock():
                 self.data[key] = value
-        logging.info(self.data)
+        logging.debug(self.data)
         return value
 
     def __gao(self):

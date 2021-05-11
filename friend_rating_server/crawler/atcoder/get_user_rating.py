@@ -2,9 +2,11 @@ from typing import Dict, Any
 import datetime
 import requests
 from lxml import etree
+import logging
 
 
 def get_competition_history(handle: str) -> Dict[str, Any]:
+    logging.info(f'crawling atcoder handle: {handle}')
     try:
         url = f'https://atcoder.jp/users/{handle}/history'
         html = requests.get(url).text

@@ -22,5 +22,4 @@ fi
 ip=`ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
 
 python "$this_dir/friend_rating_server/manage.py" collectstatic
-python "$this_dir/friend_rating_server/manage.py" migrate
 python "$this_dir/friend_rating_server/manage.py" runserver $ip:9988
