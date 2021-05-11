@@ -18,4 +18,5 @@ from friend_rating_server.web import views
 
 urlpatterns = [
     url('^$', views.index),
+    url('reload_config/', views.reload_config),
 ]
