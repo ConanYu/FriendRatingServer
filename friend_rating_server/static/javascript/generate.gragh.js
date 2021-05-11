@@ -11,7 +11,7 @@ generateGraph(document.getElementById('main'), [
             ["2020-9-13", 1669, 1669, "AtCoder Beginner Contest 178", "https://atcoder.jp/contests/abc178/standings?watching=cppisgood"]
         ], 'atcoder', 'cppisgood');
 */
-function generateGraph(dom, data, oj_name, username) {
+function generateGraph(dom, data, oj_name, username, user_info_url='') {
     // 基于准备好的dom，初始化echarts实例
     let myChart = echarts.init(dom);
 
@@ -32,7 +32,8 @@ function generateGraph(dom, data, oj_name, username) {
     // 指定图表的配置项和数据
     let option = {
         title: {
-            text: username
+            text: username,
+            link: user_info_url,
         },
         tooltip: {},
         legend: {},

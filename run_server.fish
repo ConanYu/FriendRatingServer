@@ -1,4 +1,4 @@
-switch (echo $PYTHONPATH | grep FriendRatingServer1)
+switch (echo $PYTHONPATH | grep FriendRatingServer)
     case ""
         set -ax PYTHONPATH $PWD
 end
