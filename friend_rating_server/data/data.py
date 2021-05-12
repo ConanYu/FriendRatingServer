@@ -1,3 +1,4 @@
+from typing import List
 import logging
 from friend_rating_server.util.config import get_config
 from friend_rating_server.util.scheduler_cache import SchedulerCache
@@ -31,6 +32,18 @@ def code_start_init():
 code_start_init()
 
 
+def get_reduce_data(s: List[str], source: List[dict]) -> List[dict]:
+    ret = []
+    for ele in source:
+        ret_ele = dict()
+        for item in s:
+            value = ele.get(item)
+            if value is not None:
+                ret_ele[item] = value
+        ret.append(ret_ele)
+    return ret
+
+
 def get_member() -> list:
     members = get_config("members").copy()
     logging.info(members)
@@ -55,7 +68,19 @@ def get_member() -> list:
                     member["codeforces_data"] = codeforces_rating
                     if len(codeforces_rating["data"]):
                         member["codeforces_rating"] = codeforces_rating["data"][-1]["rating"]
-    return members
+    return get_reduce_data([
+        "name",
+        "grade",
+        "index",
+        "atcoder_name",
+        "atcoder_profile_url",
+        "codeforces_name",
+        "codeforces_profile_url",
+        "atcoder_data",
+        "atcoder_rating",
+        "codeforces_data",
+        "codeforces_rating",
+    ], members)
 
 
 if __name__ == '__main__':
