@@ -42,5 +42,5 @@ def admin(request: WSGIRequest):
     user = expire_checker(request)
     members = []
     if user:
-        members = get_config("member")
+        members = get_config("members")
     return render(request, 'admin.html', locals())
