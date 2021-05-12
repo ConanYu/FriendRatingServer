@@ -28,7 +28,7 @@ function loadGraph() {
                     let name = contest["name"];
                     let url = contest["url"];
                     data.push([
-                        "" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
+                        "" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
                         rating,
                         rating,
                         name,
