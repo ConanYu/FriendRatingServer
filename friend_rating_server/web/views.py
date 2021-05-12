@@ -40,4 +40,7 @@ def admin(request: WSGIRequest):
         return admin_post(request)
     form = LoginForm()
     user = expire_checker(request)
+    members = []
+    if user:
+        members = get_config("member")
     return render(request, 'admin.html', locals())
