@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    {% if user %}
+        <p>hello</p>
+    {% else %}
+    <form class="form-login" action="/admin/" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+              密码：
+              <input type="password" name="password" value="{{ form.password.values }}">
+        </div>
+        <div>
+          <button type="submit" class="btn btn-default">登录</button>
+        </div>
+    </form>
+    {% endif%}
+    {{ message }}
+</body>
+</html>

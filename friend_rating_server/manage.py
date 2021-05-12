@@ -20,5 +20,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
-    SchedulerCache.shutdown_all()
+    try:
+        main()
+    finally:
+        SchedulerCache.shutdown_all()

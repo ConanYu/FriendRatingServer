@@ -14,13 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from friend_rating_server.web import views
 from django.conf import settings
 from django.views import static
+from friend_rating_server.web import views
+from friend_rating_server.web import api
 
 urlpatterns = [
     url('^$', views.index),
-    url('^reload_config/', views.reload_config),
-    url(r'^static/(?P<path>.*)$', static.serve,
-          {'document_root': settings.STATIC_ROOT}),
+    url("^admin/", views.admin),
+    url('^api/reload_config', api.reload_config),
+    url(r'^static/(?P<path>.*)$', static.serve, {'document_root': settings.STATIC_ROOT}),
 ]
