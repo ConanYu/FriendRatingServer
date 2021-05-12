@@ -1,6 +1,7 @@
 let app_data = {
     show: {},
     cls: {},
+    dict: {},
 };
 
 let platforms = [
@@ -8,13 +9,20 @@ let platforms = [
     "atcoder",
 ];
 
-for (let member of members) {
-    app_data["show"]["graph_" + member["index"] + "_show"] = false;
-    for (let platform of platforms) {
-        app_data["show"]["graph_" + member["index"] + "_" + platform + "_show"] = false;
-        app_data["cls"]["btn_" + member["index"] + "_" + platform] = "btn btn-sm border";
+function init() {
+    let index = 0;
+    for (let member of members) {
+        app_data["show"]["graph_" + member["index"] + "_show"] = false;
+        app_data["dict"][member["index"]] = index;
+        index += 1;
+        for (let platform of platforms) {
+            app_data["show"]["graph_" + member["index"] + "_" + platform + "_show"] = false;
+            app_data["cls"]["btn_" + member["index"] + "_" + platform] = "btn btn-sm border";
+        }
     }
 }
+
+init();
 
 function loadOneGraph(member, platform) {
     let graph_id = "graph-" + member["index"] + "-" + platform;
@@ -88,7 +96,7 @@ let app = new Vue({
             if (!is_show_before) {
                 app_data.cls["btn_" + index + "_" + platform] += " btn-success";
                 this.$nextTick(function () {
-                    loadOneGraph(members[index], platform);
+                    loadOneGraph(members[app_data["dict"][index]], platform);
                 });
             }
         },
