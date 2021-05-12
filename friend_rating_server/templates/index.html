@@ -43,8 +43,8 @@
                     <button type="button" :class="cls.btn_{{ member.index }}_codeforces" @click="showGraph({{ member.index }}, 'codeforces')">Codeforces</button>
                     <button type="button" :class="cls.btn_{{ member.index }}_atcoder" @click="showGraph({{ member.index }}, 'atcoder')">AtCoder</button>
                     <div style="margin: 10px"></div>
-                    <div style="width: 600px; height: 400px;" id="graph-{{ member.index }}-codeforces" v-show="show.graph_{{ member.index }}_codeforces_show"></div>
-                    <div style="width: 600px; height: 400px;" id="graph-{{ member.index }}-atcoder" v-show="show.graph_{{ member.index }}_atcoder_show"></div>
+                    <div style="width: 600px; height: 400px;" id="graph-{{ member.index }}-codeforces" v-if="show.graph_{{ member.index }}_codeforces_show"></div>
+                    <div style="width: 600px; height: 400px;" id="graph-{{ member.index }}-atcoder" v-if="show.graph_{{ member.index }}_atcoder_show"></div>
                 </td>
             </tr>
             {% endfor %}
