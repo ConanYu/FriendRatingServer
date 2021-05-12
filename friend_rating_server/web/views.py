@@ -11,6 +11,12 @@ from friend_rating_server.web.api import EXPIRE_RSA_CHECKER, expire_checker
 
 def index(request: WSGIRequest):
     members = get_member()
+    sort_by = request.GET.get('sortBy', '')
+    desc = request.GET.get('desc', '0') == '0'
+    try:
+        members.sort(key=lambda x: x.get(sort_by, 0), reverse=desc)
+    except Exception as e:
+        logging.exception(e)
     members_json = json.dumps(members)
     return render(request, 'index.html', locals())
 

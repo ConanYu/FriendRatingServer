@@ -23,14 +23,14 @@
                 <td>姓名</td>
                 <td>年级</td>
                 <td>Codeforces ID</td>
-                <td>Codeforces Rating</td>
+                <td @click="sortCol('codeforces_rating')">Codeforces Rating</td>
                 <td>AtCoder ID</td>
-                <td>AtCoder Rating</td>
+                <td @click="sortCol('atcoder_rating')">AtCoder Rating</td>
             </tr>
             </thead>
             <tbody>
             {% for member in members %}
-            <tr class="hover-cursor-hand" @click="showCol({{ member.index }})">
+            <tr class="hover-cursor-hand" @click="showRow({{ member.index }})">
                 <td>{{ member.name }}</td>
                 <td>{{ member.grade }}</td>
                 <td class="member-id" :style="'color: ' + getCodeforcesRatingColor({{ member.codeforces_rating }})">{{ member.codeforces_name }}</td>

@@ -58,6 +58,19 @@ function showInit(ignore) {
     }
 }
 
+function getRequestData() {
+   var url = location.search; //获取url中"?"符后的字串
+   var theRequest = {};
+   if (url.indexOf("?") !== -1) {
+      var str = url.substr(1);
+      strs = str.split("&");
+      for(var i = 0; i < strs.length; i ++) {
+         theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+      }
+   }
+   return theRequest;
+}
+
 let app = new Vue({
     delimiters: ["${", "}$"],
     el: "#app",
@@ -72,11 +85,20 @@ let app = new Vue({
                 app_data.cls["btn_" + index + "_" + platform] += " btn-success";
             }
         },
-        showCol: function (index) {
+        showRow: function (index) {
             let is_show_before = app_data.show["graph_" + index + "_show"];
             showInit();
             app_data.show["graph_" + index + "_show"] = !is_show_before;
-        }
+        },
+        sortCol: function (col) {
+            let requestData = getRequestData();
+            let desc = 0;
+            if (requestData.sortBy === col && requestData.desc) {
+                desc = requestData.desc;
+            }
+            desc = 1 - desc;
+            window.location.replace("/?sortBy=" + col + "&desc=" + desc.toString());
+        },
     },
     mounted: function () {
         this.$nextTick(loadGraph);

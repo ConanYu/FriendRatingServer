@@ -31,8 +31,8 @@ def code_start_init():
 code_start_init()
 
 
-def get_member():
-    members = get_config("members")
+def get_member() -> list:
+    members = get_config("members").copy()
     logging.info(members)
     index = 0
     if members is not None:
