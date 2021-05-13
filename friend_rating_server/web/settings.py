@@ -131,3 +131,7 @@ STATIC_ROOT = 'static'
 STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.gzip.GZipMiddleware',
+)

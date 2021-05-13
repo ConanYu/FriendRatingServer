@@ -3,7 +3,7 @@ import json
 import datetime
 from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
-from friend_rating_server.data.data import get_member, code_start_init
+from friend_rating_server.data.data import get_member
 from friend_rating_server.util.config import get_config
 from friend_rating_server.web.form.login_form import LoginForm
 from friend_rating_server.web.api import EXPIRE_RSA_CHECKER, expire_checker
