@@ -12,7 +12,7 @@ from friend_rating_server.web.api import EXPIRE_RSA_CHECKER, expire_checker
 def index(request: WSGIRequest):
     members = get_member()
     sort_by = request.GET.get('sortBy', '')
-    desc = request.GET.get('desc', '0') == '0'
+    desc = request.GET.get('desc', '1') == '0'
     if sort_by == 'codeforces_rating':
         codeforces_rating_mark = '▼' if desc else '▲'
     elif sort_by == 'atcoder_rating':
