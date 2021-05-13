@@ -18,7 +18,7 @@
 
 ## 部署
 
-本项目基于Django开发。
+本项目Web端基于Django开发，前端基于Vue、Bootstrap、ECharts开发。
 
 ### Python3安装
 
