@@ -107,7 +107,7 @@ let app = new Vue({
         },
         sortCol: function (col) {
             let requestData = getRequestData();
-            let desc = 0;
+            let desc = 1;
             if (requestData.sortBy === col && requestData.desc) {
                 desc = requestData.desc;
             }
