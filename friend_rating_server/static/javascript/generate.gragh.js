@@ -27,7 +27,7 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
         ret = get_line_graph_background_data(codeforces_ratings, getCodeforcesRatingColor);
     }
 
-    let background_data = ret[0], visual_map_pieces = ret[1];
+    let background_data = ret[0], markline_data = ret[1];
 
     // 指定图表的配置项和数据
     let option = {
@@ -39,7 +39,7 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
         grid: [
             {
                 show: true,
-                left: '20%',
+                // left: '20%',
             }
         ],
         xAxis: [
@@ -56,11 +56,18 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
                 gridIndex: 0
             },
         ],
-        lineStyle: {
-            color: 'purple'
-        },
         series: [
             {
+                lineStyle: {
+                    color: 'gold',
+                    shadowColor: 'white',
+                    shadowBlur: 1
+                },
+                itemStyle: {
+                    color: 'gold',
+                    shadowColor: 'white',
+                    shadowBlur: 1
+                },
                 name: oj_name,
                 type: 'line',
                 data: data,
@@ -70,27 +77,33 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
                 },
                 markPoint: {
                     symbol: 'circle',
-                    symbolSize: 0,
+                    symbolSize: 10,
                     silent: true,
                     data: [
                         {
                             type: 'max',
-                        }
+                            position: 'top',
+                        },
                     ]
                 },
                 markArea: {
                     silent: true,
                     data: background_data
-                }
+                },
+
+                markLine: {
+                    silent: true,
+                    symbol: 'none',
+                    label: {
+                        position: 'start',
+                    },
+                    lineStyle: {
+                        type: 'solid',
+                        width: 0,
+                    },
+                    data: markline_data,
+                },
             },
-        ],
-        visualMap: [
-            {
-                pieces: visual_map_pieces,
-                left: '0%',
-                top: '25%',
-                dimension: 1
-            }
         ],
         tooltip: {
             backgroundColor: '#222',

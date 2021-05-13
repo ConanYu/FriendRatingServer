@@ -34,42 +34,47 @@ function getCodeforcesRatingColor(rating = 0) {
     } else if (rating < 3000) {
         return "red";
     } else {
-        return "black";
+        return "#7b0000";
     }
 }
 
-let atcoder_ratings = [400, 800, 1200, 1600, 2000, 2400, 2800, 4000];
+let atcoder_ratings = [400, 800, 1200, 1600, 2000, 2400, 2800, 5000];
 
-let codeforces_ratings = [1200, 1400, 1600, 1900, 2100, 2400, 3000, 4000];
+let codeforces_ratings = [1200, 1400, 1600, 1900, 2100, 2400, 3000, 5000];
 
 
 /*
-@param rating point of the different color, function map rating to color
+@param ratings: rating point of the different color
+@param get_color function map rating to color
 @return [the background data of graph, conifg of visual_map which show how rating match color]
 */
 function get_line_graph_background_data(ratings, get_color) {
     let color_data = [];
-    let visual_map_pieces = [];
+    let markline_data = [];
     let pre = 0;
     for (let x of ratings) {
         color_data.push([
             {
-                yAxis: pre.toString(),
+                yAxis: pre,
                 itemStyle: {
                     color: get_color(pre),
-                    opacity: 0.8
+                    opacity: 0.6,
                 }
             },
             {
-                yAxis: x.toString()
+                yAxis: x
             }
         ]);
-        visual_map_pieces.push({
-            min: pre,
-            max: x,
-            color: get_color(pre)
+        markline_data.push({
+            yAxis: x,
+            lineStyle: {
+                color: getCodeforcesRatingColor(x),
+            },
+            label: {
+                color: getCodeforcesRatingColor(x),
+            },
         });
         pre = x;
     }
-    return [color_data, visual_map_pieces];
+    return [color_data, markline_data];
 }
