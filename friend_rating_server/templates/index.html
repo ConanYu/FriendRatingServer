@@ -21,8 +21,10 @@
                 <td>年级</td>
                 <td>Codeforces ID</td>
                 <td @click="sortCol('codeforces_rating')">Codeforces Rating {{ codeforces_rating_mark }}</td>
+                <td>Codeforces 场次</td>
                 <td>AtCoder ID</td>
                 <td @click="sortCol('atcoder_rating')">AtCoder Rating {{ atcoder_rating_mark }}</td>
+                <td>AtCoder 场次</td>
             </tr>
             </thead>
             <tbody>
@@ -31,9 +33,11 @@
                 <td>{{ member.name }}</td>
                 <td>{{ member.grade }}</td>
                 <td class="member-id" :style="'color: ' + getCodeforcesRatingColor({{ member.codeforces_rating }})">{{ member.codeforces_name }}</td>
-                <td :style="'color: ' + getCodeforcesRatingColor({{ member.codeforces_rating }})">{{ member.codeforces_rating }}</td>
+                <td :style="'color: ' + getCodeforcesRatingColor({{ member.codeforces_rating }})">{{ member.codeforces_rating | default:'0' }}</td>
+                <td>{{ member.codeforces_data.data | length }}</td>
                 <td class="member-id" :style="'color: ' + getAtcoderRatingColor({{ member.atcoder_rating }})">{{ member.atcoder_name }}</td>
-                <td :style="'color: ' + getAtcoderRatingColor({{ member.atcoder_rating }})">{{ member.atcoder_rating }}</td>
+                <td :style="'color: ' + getAtcoderRatingColor({{ member.atcoder_rating }})">{{ member.atcoder_rating | default:'0' }}</td>
+                <td>{{ member.atcoder_data.data | length }}</td>
             </tr>
             <tr v-show="show.graph_{{ member.index }}_show">
                 <td colspan="6">
