@@ -13,6 +13,10 @@ def index(request: WSGIRequest):
     members = get_member()
     sort_by = request.GET.get('sortBy', '')
     desc = request.GET.get('desc', '0') == '0'
+    if sort_by == 'codeforces_rating':
+        codeforces_rating_mark = '▼' if desc else '▲'
+    elif sort_by == 'atcoder_rating':
+        atcoder_rating_mark = '▼' if desc else '▲'
     try:
         members.sort(key=lambda x: x.get(sort_by, 0), reverse=desc)
     except Exception as e:

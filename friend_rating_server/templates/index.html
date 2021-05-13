@@ -20,9 +20,9 @@
                 <td>姓名</td>
                 <td>年级</td>
                 <td>Codeforces ID</td>
-                <td @click="sortCol('codeforces_rating')">Codeforces Rating</td>
+                <td @click="sortCol('codeforces_rating')">Codeforces Rating {{ codeforces_rating_mark }}</td>
                 <td>AtCoder ID</td>
-                <td @click="sortCol('atcoder_rating')">AtCoder Rating</td>
+                <td @click="sortCol('atcoder_rating')">AtCoder Rating {{ atcoder_rating_mark }}</td>
             </tr>
             </thead>
             <tbody>
