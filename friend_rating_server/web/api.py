@@ -5,7 +5,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from friend_rating_server.util.rsa_checker import RSAChecker
 from friend_rating_server.util.config import get_config, reload_config as reload
-from friend_rating_server.data.data import code_start_init
+from friend_rating_server.data.data import ATCODER_RATING_CACHE, CODEFORCES_RATING_CACHE, NOWCODER_RATING_CACHE
 
 
 EXPIRE_RSA_CHECKER = RSAChecker()
@@ -31,10 +31,52 @@ def expire_checker(request: WSGIRequest, key=None) -> bool:
 def reload_config(request: WSGIRequest):
     if request.method == 'POST' and expire_checker(request):
         reload()
-        code_start_init()
         return HttpResponse(json.dumps({
             'status': 'OK',
         }))
     return HttpResponse(json.dumps({
         'status': 'ERROR',
     }))
+
+
+def get_atcoder_data(request: WSGIRequest):
+    handle = request.GET.get('handle', '')
+    result = ATCODER_RATING_CACHE.get(handle)
+    return HttpResponse(json.dumps(result))
+
+
+def get_codeforces_data(request: WSGIRequest):
+    handle = request.GET.get('handle', '')
+    result = CODEFORCES_RATING_CACHE.get(handle)
+    return HttpResponse(json.dumps(result))
+
+
+def get_nowcoder_data(request: WSGIRequest):
+    handle = request.GET.get('handle', '')
+    result = NOWCODER_RATING_CACHE.get(handle)
+    return HttpResponse(json.dumps(result))
+
+
+def get_all_data_source(request: WSGIRequest) -> dict:
+    codeforces = request.GET.get('codeforces', '')
+    atcoder = request.GET.get('atcoder', '')
+    nowcoder = request.GET.get('nowcoder', '')
+    return {
+        "codeforces_contest": CODEFORCES_RATING_CACHE.get(codeforces),
+        "atcoder_contest": ATCODER_RATING_CACHE.get(atcoder),
+        "nowcoder_contest": NOWCODER_RATING_CACHE.get(nowcoder),
+    }
+
+
+def get_all_data(request: WSGIRequest):
+    return HttpResponse(json.dumps(get_all_data_source(request)))
+
+
+def get_all_data_simple(request: WSGIRequest):
+    data = get_all_data_source(request)
+    for value in data.values():
+        try:
+            del value["data"]
+        except Exception as e:
+            logging.exception(e)
+    return HttpResponse(json.dumps(data))

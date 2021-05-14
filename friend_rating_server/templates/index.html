@@ -20,35 +20,41 @@
                 <td>姓名</td>
                 <td>年级</td>
                 <td>Codeforces ID</td>
-                <td @click="sortCol('codeforces_rating')">Codeforces Rating {{ codeforces_rating_mark }}</td>
+                <td @click="sortCol('codeforces')">Codeforces Rating {{ codeforces_rating_mark }}</td>
                 <td>Codeforces 场次</td>
                 <td>AtCoder ID</td>
-                <td @click="sortCol('atcoder_rating')">AtCoder Rating {{ atcoder_rating_mark }}</td>
+                <td @click="sortCol('atcoder')">AtCoder Rating {{ atcoder_rating_mark }}</td>
                 <td>AtCoder 场次</td>
+                <td @click="sortCol('nowcoder')">牛客网Rating</td>
+                <td>牛客网场次</td>
             </tr>
             </thead>
             <tbody>
-            {% for member in members %}
-            <tr class="hover-cursor-hand" @click="showRow({{ member.index }})">
-                <td>{{ member.name }}</td>
-                <td>{{ member.grade }}</td>
-                <td class="member-id" :style="'color: ' + getCodeforcesRatingColor({{ member.codeforces_rating }})">{{ member.codeforces_name }}</td>
-                <td :style="'color: ' + getCodeforcesRatingColor({{ member.codeforces_rating }})">{{ member.codeforces_rating | default:'0' }}</td>
-                <td>{{ member.codeforces_data.data | length }}</td>
-                <td class="member-id" :style="'color: ' + getAtcoderRatingColor({{ member.atcoder_rating }})">{{ member.atcoder_name }}</td>
-                <td :style="'color: ' + getAtcoderRatingColor({{ member.atcoder_rating }})">{{ member.atcoder_rating | default:'0' }}</td>
-                <td>{{ member.atcoder_data.data | length }}</td>
-            </tr>
-            <tr v-show="show.graph_{{ member.index }}_show">
-                <td colspan="6">
-                    <button type="button" :class="cls.btn_{{ member.index }}_codeforces" @click="showGraph({{ member.index }}, 'codeforces')">Codeforces</button>
-                    <button type="button" :class="cls.btn_{{ member.index }}_atcoder" @click="showGraph({{ member.index }}, 'atcoder')">AtCoder</button>
-                    <div style="margin: 10px"></div>
-                    <div style="width: 600px; height: 400px;" id="graph-{{ member.index }}-codeforces" v-if="show.graph_{{ member.index }}_codeforces_show"></div>
-                    <div style="width: 600px; height: 400px;" id="graph-{{ member.index }}-atcoder" v-if="show.graph_{{ member.index }}_atcoder_show"></div>
-                </td>
-            </tr>
-            {% endfor %}
+                <template v-for="member in members">
+                    <tr class="hover-cursor-hand" @click="showRow(member.index)">
+                        <td>${ member.name }$</td>
+                        <td>${ member.grade }$</td>
+                        <td class="member-id" :style="'color: ' + getCodeforcesRatingColor(table[member.index].codeforces_contest.rating)">${ member.codeforces }$</td>
+                        <td :style="'color: ' + getCodeforcesRatingColor(table[member.index].codeforces_contest.rating)">${ table[member.index].codeforces_contest.rating }$</td>
+                        <td>${ table[member.index].codeforces_contest.length }$</td>
+                        <td class="member-id" :style="'color: ' + getAtcoderRatingColor(table[member.index].atcoder_contest.rating)">${ member.atcoder }$</td>
+                        <td :style="'color: ' + getAtcoderRatingColor(table[member.index].atcoder_contest.rating)">${ table[member.index].atcoder_contest.rating }$</td>
+                        <td>${ table[member.index].atcoder_contest.length }$</td>
+                        <td>${ table[member.index].nowcoder_contest.rating }$</td>
+                        <td>${ table[member.index].nowcoder_contest.length }$</td>
+                    </tr>
+                    <tr v-show="show['graph_' + member.index + '_show']">
+                        <td colspan="8">
+                            <button type="button" :class="cls['btn_' + member.index + '_codeforces']" @click="showGraph(member.index, 'codeforces')">Codeforces</button>
+                            <button type="button" :class="cls['btn_' + member.index + '_atcoder']" @click="showGraph(member.index, 'atcoder')">AtCoder</button>
+                            <button type="button" :class="cls['btn_' + member.index + '_nowcoder']" @click="showGraph(member.index, 'nowcoder')">NowCoder</button>
+                            <div style="margin: 10px"></div>
+                            <div style="width: 600px; height: 400px;" :id="'graph-' + member.index + '-codeforces'" v-if="show['graph_' + member.index + '_codeforces_show']"></div>
+                            <div style="width: 600px; height: 400px;" :id="'graph-' + member.index + '-atcoder'" v-if="show['graph_' + member.index + '_atcoder_show']"></div>
+                            <div style="width: 600px; height: 400px;" :id="'graph-' + member.index + '-nowcoder'" v-if="show['graph_' + member.index + '_nowcoder_show']"></div>
+                        </td>
+                    </tr>
+                </template>
             </tbody>
         </table>
     </div>
