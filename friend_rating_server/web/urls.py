@@ -21,7 +21,11 @@ from friend_rating_server.web import api
 
 urlpatterns = [
     url('^$', views.index),
-    url("^admin/", views.admin),
-    url('^api/reload_config', api.reload_config),
+    url("^admin$", views.admin),
+    url('^api/reload_config$', api.reload_config),
+    url('^api/get_atcoder_data$', api.get_atcoder_data),
+    url('^api/get_codeforces_data$', api.get_codeforces_data),
+    url('^api/get_all_data$', api.get_all_data),
+    url('^api/get_all_data_simple$', api.get_all_data_simple),
     url(r'^static/(?P<path>.*)$', static.serve, {'document_root': settings.STATIC_ROOT}),
 ]

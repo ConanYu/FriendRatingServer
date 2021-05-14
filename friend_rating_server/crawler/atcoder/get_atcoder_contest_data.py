@@ -1,11 +1,10 @@
-from typing import Dict, Any
 import datetime
 import requests
 from lxml import etree
 import logging
 
 
-def get_competition_history(handle: str) -> Dict[str, Any]:
+def get_atcoder_contest_data(handle: str) -> dict:
     logging.info(f'crawling atcoder handle: {handle}')
     try:
         url = f'https://atcoder.jp/users/{handle}/history'
@@ -20,8 +19,8 @@ def get_competition_history(handle: str) -> Dict[str, Any]:
             if performance == '-':
                 continue
             data = {
-                'timestamp': datetime.datetime.strptime(table.xpath('//td[1]/@data-order')[0],
-                                                   '%Y/%m/%d %H:%M:%S').timestamp(),
+                'timestamp': int(datetime.datetime.strptime(table.xpath('//td[1]/@data-order')[0],
+                                                   '%Y/%m/%d %H:%M:%S').timestamp()),
                 'name': table.xpath('//td[2]/a[1]')[0].text,
                 'url': "https://atcoder.jp" + table.xpath('//td[2]/a[1]/@href')[0],
                 'rating': int(table.xpath('//td[5]/span')[0].text),
@@ -30,15 +29,18 @@ def get_competition_history(handle: str) -> Dict[str, Any]:
         return {
             'status': 'OK',
             'data': ret,
-            'username': handle,
+            'handle': handle,
+            'rating': ret[-1]["rating"] if len(ret) else None,
+            'profile_url': f"https://atcoder.jp/users/{handle}",
+            'length': len(ret),
         }
     except Exception as e:
+        logging.exception(e)
         return {
             "status": "unknown error",
-            'data': [],
-            "exception": e,
+            "data": [],
         }
 
 
 if __name__ == '__main__':
-    print(get_competition_history("ConanYu"))
+    print(get_atcoder_contest_data("ConanYu"))

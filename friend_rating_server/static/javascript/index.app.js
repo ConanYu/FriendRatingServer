@@ -2,12 +2,16 @@ let app_data = {
     show: {},
     cls: {},
     dict: {},
+    table: {},
+    members: members,
 };
 
 let platforms = [
     "codeforces",
     "atcoder",
 ];
+
+let httpGetPromise = [];
 
 function init() {
     let index = 0;
@@ -19,16 +23,31 @@ function init() {
             app_data["show"]["graph_" + member["index"] + "_" + platform + "_show"] = false;
             app_data["cls"]["btn_" + member["index"] + "_" + platform] = "btn btn-sm border";
         }
+        httpGetPromise.push(new Promise((resolve, reject) => {
+            axios.get('/api/get_all_data_simple', {
+                params: {
+                    codeforces: member.codeforces,
+                    atcoder: member.atcoder,
+                },
+            }).then(res => {
+                resolve({
+                    data: res.data,
+                    index: member.index,
+                });
+            }).catch(err => {
+                reject(err.data)
+            });
+        }));
     }
 }
 
 init();
 
-function loadOneGraph(member, platform) {
-    let graph_id = "graph-" + member["index"] + "-" + platform;
-    if (member[platform + "_data"]) {
+function loadOneGraph(graph, index, platform) {
+    let graph_id = "graph-" + index + "-" + platform;
+    if (graph.data) {
         let data = [];
-        for (let contest of member[platform + "_data"]["data"]) {
+        for (let contest of graph["data"]) {
             let date = new Date(contest["timestamp"] * 1000);
             let rating = contest["rating"];
             let name = contest["name"];
@@ -41,23 +60,12 @@ function loadOneGraph(member, platform) {
                 url,
             ]);
         }
-        data.sort(function (a, b) {
-            return a[0] - b[0];
-        });
         generateGraph(
             document.getElementById(graph_id),
             data,
             platform,
-            member[platform + "_name"],
-            member[platform + "_profile_url"]);
-    }
-}
-
-function loadAllGraph() {
-    for (let member of members) {
-        for (let platform of platforms) {
-            loadOneGraph(member, platform);
-        }
+            graph[platform + "_name"],
+            graph[platform + "_profile_url"]);
     }
 }
 
@@ -83,37 +91,50 @@ function getRequestData() {
     return theRequest;
 }
 
-let app = new Vue({
-    delimiters: ["${", "}$"],
-    el: "#app",
-    data: app_data,
-    methods: {
-        showGraph: function (index, platform) {
-            let is_show_before = app_data.show["graph_" + index + "_" + platform + "_show"];
-            showInit();
-            app_data.show["graph_" + index + "_show"] = true;
-            app_data.show["graph_" + index + "_" + platform + "_show"] = !is_show_before;
-            if (!is_show_before) {
-                app_data.cls["btn_" + index + "_" + platform] += " btn-success";
-                this.$nextTick(function () {
-                    loadOneGraph(members[app_data["dict"][index]], platform);
-                });
-            }
+Promise.all(httpGetPromise).then((value => {
+    console.log(value);
+    for (let data of value) {
+        app_data.table[data.index.valueOf()] = data.data;
+    }
+    new Vue({
+        delimiters: ["${", "}$"],
+        el: "#app",
+        data: app_data,
+        methods: {
+            showGraph: function (index, platform) {
+                let is_show_before = app_data.show["graph_" + index + "_" + platform + "_show"];
+                showInit();
+                app_data.show["graph_" + index + "_show"] = true;
+                app_data.show["graph_" + index + "_" + platform + "_show"] = !is_show_before;
+                if (!is_show_before) {
+                    app_data.cls["btn_" + index + "_" + platform] += " btn-success";
+                    this.$nextTick(function () {
+                        axios.get('/api/get_' + platform + "_data", {
+                            params: {
+                                handle: members[index][platform],
+                            },
+                        }).then((res) => {
+                            loadOneGraph(res.data, app_data.dict[index], platform);
+                        });
+                    });
+                }
+            },
+            showRow: function (index) {
+                let is_show_before = app_data.show["graph_" + index + "_show"];
+                showInit();
+                app_data.show["graph_" + index + "_show"] = !is_show_before;
+            },
+            sortCol: function (col) {
+                let requestData = getRequestData();
+                let desc = 1;
+                if (requestData.sortBy === col && requestData.desc) {
+                    desc = requestData.desc;
+                }
+                desc = 1 - desc;
+                window.location.replace("/?sortBy=" + col + "&desc=" + desc.toString());
+            },
+            getCodeforcesRatingColor: getCodeforcesRatingColor,
+            getAtcoderRatingColor: getAtcoderRatingColor,
         },
-        showRow: function (index) {
-            let is_show_before = app_data.show["graph_" + index + "_show"];
-            showInit();
-            app_data.show["graph_" + index + "_show"] = !is_show_before;
-        },
-        sortCol: function (col) {
-            let requestData = getRequestData();
-            let desc = 1;
-            if (requestData.sortBy === col && requestData.desc) {
-                desc = requestData.desc;
-            }
-            desc = 1 - desc;
-            window.location.replace("/?sortBy=" + col + "&desc=" + desc.toString());
-        },
-    },
-});
-
+    });
+}));
