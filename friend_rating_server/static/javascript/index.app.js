@@ -4,11 +4,13 @@ let app_data = {
     dict: {},
     table: {},
     members: members,
+    sortStatus: '',
 };
 
 let platforms = [
     "codeforces",
     "atcoder",
+    "nowcoder",
 ];
 
 let httpGetPromise = [];
@@ -23,12 +25,13 @@ function init() {
             app_data["show"]["graph_" + member["index"] + "_" + platform + "_show"] = false;
             app_data["cls"]["btn_" + member["index"] + "_" + platform] = "btn btn-sm border";
         }
+        let params = {};
+        for (let platform of platforms) {
+            params[platform] = member[platform];
+        }
         httpGetPromise.push(new Promise((resolve, reject) => {
             axios.get('/api/get_all_data_simple', {
-                params: {
-                    codeforces: member.codeforces,
-                    atcoder: member.atcoder,
-                },
+                params: params,
             }).then(res => {
                 resolve({
                     data: res.data,
@@ -64,8 +67,8 @@ function loadOneGraph(graph, index, platform) {
             document.getElementById(graph_id),
             data,
             platform,
-            graph[platform + "_name"],
-            graph[platform + "_profile_url"]);
+            graph["handle"],
+            graph["profile_url"]);
     }
 }
 
@@ -92,7 +95,6 @@ function getRequestData() {
 }
 
 Promise.all(httpGetPromise).then((value => {
-    console.log(value);
     for (let data of value) {
         app_data.table[data.index.valueOf()] = data.data;
     }
@@ -111,10 +113,10 @@ Promise.all(httpGetPromise).then((value => {
                     this.$nextTick(function () {
                         axios.get('/api/get_' + platform + "_data", {
                             params: {
-                                handle: members[index][platform],
+                                handle: app_data.members[app_data.dict[index]][platform],
                             },
                         }).then((res) => {
-                            loadOneGraph(res.data, app_data.dict[index], platform);
+                            loadOneGraph(res.data, index, platform);
                         });
                     });
                 }
@@ -124,14 +126,21 @@ Promise.all(httpGetPromise).then((value => {
                 showInit();
                 app_data.show["graph_" + index + "_show"] = !is_show_before;
             },
-            sortCol: function (col) {
-                let requestData = getRequestData();
-                let desc = 1;
-                if (requestData.sortBy === col && requestData.desc) {
-                    desc = requestData.desc;
+            sortCol: function (platform) {
+                app_data.members.sort(function (a, b) {
+                    return app_data.table[a.index][platform + "_contest"].rating - app_data.table[b.index][platform + "_contest"].rating;
+                });
+                if (app_data.sortStatus !== platform + "_desc") {
+                    app_data.members.reverse();
+                    app_data.sortStatus = platform + "_desc";
+                } else {
+                    app_data.sortStatus = platform + "_inc";
                 }
-                desc = 1 - desc;
-                window.location.replace("/?sortBy=" + col + "&desc=" + desc.toString());
+                let index = 0;
+                for (let member of app_data.members) {
+                    app_data["dict"][member["index"]] = index;
+                    index += 1;
+                }
             },
             getCodeforcesRatingColor: getCodeforcesRatingColor,
             getAtcoderRatingColor: getAtcoderRatingColor,

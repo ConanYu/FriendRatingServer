@@ -20,7 +20,7 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
     //     return new Date(time * 1000).toLocaleDateString().replaceAll('/', '-');
     // }
 
-    let ret = null;
+    let ret = [null, null];
     if (oj_name === 'atcoder') {
         ret = get_line_graph_background_data(atcoder_ratings, getAtcoderRatingColor);
     } else if (oj_name === 'codeforces') {

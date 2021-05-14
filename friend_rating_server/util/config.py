@@ -29,8 +29,7 @@ def get_config(path: str, default=None):
                 return default
             try:
                 ret = ret[arg]
-            except Exception as e:
-                logging.exception(e)
+            except:
                 return default
         return ret
 
