@@ -5,6 +5,7 @@ let app_data = {
     table: {},
     members: members,
     sortStatus: '',
+    is_loading: true,
 };
 
 let platforms = [
@@ -98,6 +99,7 @@ Promise.all(httpGetPromise).then((value => {
     for (let data of value) {
         app_data.table[data.index.valueOf()] = data.data;
     }
+    app_data.is_loading = false;
     new Vue({
         delimiters: ["${", "}$"],
         el: "#app",
@@ -126,15 +128,33 @@ Promise.all(httpGetPromise).then((value => {
                 showInit();
                 app_data.show["graph_" + index + "_show"] = !is_show_before;
             },
-            sortCol: function (platform) {
+            sortRatingCol: function (platform) {
                 app_data.members.sort(function (a, b) {
-                    return app_data.table[a.index][platform + "_contest"].rating - app_data.table[b.index][platform + "_contest"].rating;
+                    return app_data.table[a.index][platform + "_contest"].rating -
+                        app_data.table[b.index][platform + "_contest"].rating;
                 });
-                if (app_data.sortStatus !== platform + "_desc") {
+                if (app_data.sortStatus !== platform + "_contest_desc") {
                     app_data.members.reverse();
-                    app_data.sortStatus = platform + "_desc";
+                    app_data.sortStatus = platform + "_contest_desc";
                 } else {
-                    app_data.sortStatus = platform + "_inc";
+                    app_data.sortStatus = platform + "_contest_inc";
+                }
+                let index = 0;
+                for (let member of app_data.members) {
+                    app_data["dict"][member["index"]] = index;
+                    index += 1;
+                }
+            },
+            sortSubmitCol: function (platform) {
+                app_data.members.sort(function (a, b) {
+                    return app_data.table[a.index][platform + "_submit"].accept_count -
+                        app_data.table[b.index][platform + "_submit"].accept_count;
+                });
+                if (app_data.sortStatus !== platform + "_submit_desc") {
+                    app_data.members.reverse();
+                    app_data.sortStatus = platform + "_submit_desc";
+                } else {
+                    app_data.sortStatus = platform + "_submit_inc";
                 }
                 let index = 0;
                 for (let member of app_data.members) {

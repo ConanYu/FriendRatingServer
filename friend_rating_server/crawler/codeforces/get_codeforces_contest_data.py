@@ -1,16 +1,14 @@
 import logging
 import json
 import requests
-from concurrent.futures import ThreadPoolExecutor
-
-codeforces_contest_thread_pool_executor = ThreadPoolExecutor(max_workers=1)
+from friend_rating_server.crawler.codeforces.thread_pool_executor import CODEFORCES_THREAD_EXECUTOR
 
 
 def get_codeforces_contest_data(handle: str) -> dict:
     logging.info(f'crawling codeforces handle: {handle}')
     try:
-        task = codeforces_contest_thread_pool_executor.submit(requests.get,
-                                                              f"https://codeforces.com/api/user.rating?handle={handle}")
+        task = CODEFORCES_THREAD_EXECUTOR.submit(requests.get,
+                                                 f"https://codeforces.com/api/user.rating?handle={handle}")
         result = json.loads(task.result().text)
         result["data"] = []
         for contest in result["result"]:

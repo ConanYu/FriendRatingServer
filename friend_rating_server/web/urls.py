@@ -25,6 +25,7 @@ urlpatterns = [
     url('^api/reload_config$', api.reload_config),
     url('^api/get_atcoder_data$', api.get_atcoder_data),
     url('^api/get_codeforces_data$', api.get_codeforces_data),
+    url('^api/get_codeforces_submit_data$', api.get_codeforces_submit_data),
     url('^api/get_nowcoder_data$', api.get_nowcoder_data),
     url('^api/get_all_data$', api.get_all_data),
     url('^api/get_all_data_simple$', api.get_all_data_simple),

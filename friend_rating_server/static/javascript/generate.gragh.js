@@ -25,6 +25,8 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
         ret = get_line_graph_background_data(atcoder_ratings, getAtcoderRatingColor);
     } else if (oj_name === 'codeforces') {
         ret = get_line_graph_background_data(codeforces_ratings, getCodeforcesRatingColor);
+    } else if (oj_name === 'nowcoder') {
+        ret = get_line_graph_background_data(nowcoder_ratings, getNowcoderRatingColor);
     }
 
     let background_data = ret[0], markline_data = ret[1];
