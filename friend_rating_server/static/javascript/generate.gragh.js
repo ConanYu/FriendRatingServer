@@ -41,6 +41,7 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
         toolbox: {
             feature: {
                 saveAsImage: {
+                    name: oj_name + ' ' + username,
                     pixelRatio: 2
                 }
             }
@@ -91,7 +92,10 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
                     data: [
                         {
                             type: 'max',
-                            position: 'top',
+                            label: {
+                                position: 'top',
+                                textBorderWidth: 5,
+                            }
                         },
                     ]
                 },
@@ -140,7 +144,12 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
 
 function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
     let myChart = echarts.init(dom);
-
+    let min_val = null;
+    let max_val = null;
+    if (data.length !== 0) {
+        min_val = data[0][0];
+        max_val = data[data.length - 1][0];
+    }
     let option = {
         title: {
             text: username,
@@ -160,9 +169,16 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
                 type: 'shadow'
             },
             position: 'right',
+            formatter: function (obj) {
+                var value = obj.value;
+                return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 0px;margin-bottom: 0px">'
+                    + '分数: ' + value[0] + '<br>'
+                    + '过题数: ' + value[1]
+                    + '</div>'
+            },
         },
         grid: {
-            bottom: 90
+            top: '20%',
         },
         dataZoom: [{
             type: 'inside'
@@ -170,7 +186,7 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
             type: 'slider'
         }],
         xAxis: {
-            // data: data,
+            name: '分数',
             type: 'value',
             // type: 'category',
             silent: false,
@@ -181,9 +197,11 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
                 show: false
             },
             minInterval: 100,
-            interval: 100,
+            min: min_val - 100,
+            max: max_val + 100,
         },
         yAxis: {
+            name: '过题数',
             splitArea: {
                 show: false
             }
@@ -205,7 +223,23 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
                     }
                 }
             }
-        }]
+        }],
+        min: min_val,
+        max: max_val,
+        visualMap: {
+            show: false,
+            orient: 'horizontal',
+            left: 'center',
+            min: min_val,
+            max: max_val,
+            text: ['High Score', 'Low Score'],
+            // Map the score column to color
+            dimension: 0,
+            inRange: {
+                color: ['green', 'red']
+            }
+            
+        },
     };
     myChart.setOption(option);
 }
