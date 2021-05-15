@@ -36,6 +36,13 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
             link: user_info_url,
         },
         legend: {},
+        toolbox: {
+            feature: {
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         grid: [
             {
                 show: true,
@@ -125,5 +132,75 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
     });
 
     // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+}
+
+function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
+    let myChart = echarts.init(dom);
+
+    let option = {
+        title: {
+            text: username,
+            link: user_info_url,
+            subtext: '总题数: ' + sum,
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        grid: {
+            bottom: 90
+        },
+        dataZoom: [{
+            type: 'inside'
+        }, {
+            type: 'slider'
+        }],
+        xAxis: {
+            // data: data,
+            type: 'category',
+            silent: false,
+            splitLine: {
+                show: false
+            },
+            splitArea: {
+                show: false
+            },
+            // minInterval: 100,
+            // interval: 100,
+        },
+        yAxis: {
+            splitArea: {
+                show: false
+            }
+        },
+        legend: {},
+        series: [{
+            type: 'bar',
+            data: data,
+            name: oj_name,
+            large: true,
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: true, //开启显示
+                        position: 'top', //在上方显示
+                        textStyle: { //数值样式
+                            color: 'black',
+                        }
+                    }
+                }
+            }
+        }]
+    };
     myChart.setOption(option);
 }
