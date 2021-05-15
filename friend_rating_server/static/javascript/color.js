@@ -42,6 +42,23 @@ let atcoder_ratings = [400, 800, 1200, 1600, 2000, 2400, 2800, 5000];
 
 let codeforces_ratings = [1200, 1400, 1600, 1900, 2100, 2400, 3000, 5000];
 
+let nowcoder_ratings = [700, 1200, 1500, 2200, 2800, 4000];
+
+function getNowcoderRatingColor(rating = 0) {
+    if (rating < 700) {
+        return "#B5B5B5";
+    } else if (rating < 1200) {
+        return "#C172EA";
+    } else if (rating < 1500) {
+        return "#5C9FF8";
+    } else if (rating < 2200) {
+        return "#10BC9A";
+    } else if (rating < 2800) {
+        return "#FFCE5D";
+    } else {
+        return "#FF0000";
+    }
+}
 
 /*
 @param ratings: rating point of the different color
