@@ -142,13 +142,17 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
     myChart.setOption(option);
 }
 
-function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
+function generateLineGraph(dom, data, oj_name, username, user_info_url) {
     let myChart = echarts.init(dom);
     let min_val = null;
     let max_val = null;
     if (data.length !== 0) {
         min_val = data[0][0];
         max_val = data[data.length - 1][0];
+    }
+    let sum = 0;
+    for (let item of data) {
+        sum += item[1];
     }
     let option = {
         title: {

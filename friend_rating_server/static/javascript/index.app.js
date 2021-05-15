@@ -12,6 +12,7 @@ let platforms = [
     "codeforces",
     "atcoder",
     "nowcoder",
+    "codeforces_submit"
 ];
 
 let httpGetPromise = [];
@@ -73,6 +74,18 @@ function loadOneGraph(graph, index, platform) {
     }
 }
 
+function loadSubmitGraph(data, index, platform) {
+    let graph_id = "graph-" + index + "-" + platform + "_submit";
+    if (data.status === 'OK') {
+        let distribution = data.data.distribution;
+        let arr = [];
+        for (let point in distribution) {
+            arr.push([parseInt(point, 10), distribution[point]]);
+        }
+        generateLineGraph(document.getElementById(graph_id), arr, 'codeforces', data.handle, data.profile_url);
+    }
+}
+
 function showInit(ignore) {
     for (let key in app_data.show) {
         app_data.show[key.valueOf()] = false;
@@ -119,6 +132,24 @@ Promise.all(httpGetPromise).then((value => {
                             },
                         }).then((res) => {
                             loadOneGraph(res.data, index, platform);
+                        });
+                    });
+                }
+            },
+            showSubmitGraph: function (index, platform) {
+                let is_show_before = app_data.show["graph_" + index + "_" + platform + "_submit_show"];
+                showInit();
+                app_data.show["graph_" + index + "_show"] = true;
+                app_data.show["graph_" + index + "_" + platform + "_submit_show"] = !is_show_before;
+                if (!is_show_before) {
+                    app_data.cls["btn_" + index + "_" + platform + "_submit"] += " btn-success";
+                    this.$nextTick(function () {
+                        axios.get('/api/get_' + platform + "_submit_data", {
+                            params: {
+                                handle: app_data.members[app_data.dict[index]][platform],
+                            },
+                        }).then((res) => {
+                            loadSubmitGraph(res.data, index, platform);
                         });
                     });
                 }
