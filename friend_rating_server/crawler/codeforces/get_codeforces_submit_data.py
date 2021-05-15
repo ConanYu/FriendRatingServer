@@ -37,6 +37,7 @@ def get_codeforces_submit_data(handle: str) -> dict:
             "handle": handle,
             "accept_count": accept_count,
             "submit_count": submit_count,
+            "profile_url": f"https://codeforces.com/profile/{handle}",
             "data": {
                 "distribution": distribution,
             },
