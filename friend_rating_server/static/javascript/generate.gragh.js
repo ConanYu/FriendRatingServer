@@ -13,6 +13,7 @@ generateGraph(document.getElementById('main'), [
 */
 function generateGraph(dom, data, oj_name, username, user_info_url) {
     // 基于准备好的dom，初始化echarts实例
+    console.log(dom);
     let myChart = echarts.init(dom);
 
     // function unixstampToDate(time) {
@@ -122,7 +123,7 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
             backgroundColor: '#222',
             borderColor: '#777',
             formatter: function (obj) {
-                var value = obj.value;
+                let value = obj.value;
                 return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
                     + value[3] + '<br>'
                     + 'rating: ' + value[1]
@@ -138,11 +139,12 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
         window.open(params.value[4]);
     });
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+    console.log(option);
+    myChart.setOption(option, true);
 }
 
 function generateLineGraph(dom, data, oj_name, username, user_info_url) {
+    console.log(dom);
     let myChart = echarts.init(dom);
     let min_val = null;
     let max_val = null;
@@ -174,7 +176,7 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url) {
             },
             position: 'right',
             formatter: function (obj) {
-                var value = obj.value;
+                let value = obj.value;
                 return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 0px;margin-bottom: 0px">'
                     + '分数: ' + value[0] + '<br>'
                     + '过题数: ' + value[1]
@@ -235,8 +237,7 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url) {
             left: 'center',
             min: min_val,
             max: max_val,
-            text: ['High Score', 'Low Score'],
-            // Map the score column to color
+
             dimension: 0,
             inRange: {
                 color: ['green', 'red']
@@ -244,5 +245,6 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url) {
             
         },
     };
-    myChart.setOption(option);
+    console.log(option);
+    myChart.setOption(option, true);
 }
