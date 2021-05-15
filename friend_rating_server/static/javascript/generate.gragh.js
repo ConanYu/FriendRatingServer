@@ -188,7 +188,6 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
         xAxis: {
             name: '分数',
             type: 'value',
-            // type: 'category',
             silent: false,
             splitLine: {
                 show: false
