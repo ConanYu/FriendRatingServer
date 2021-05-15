@@ -122,7 +122,8 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
                 return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
                     + value[3] + '<br>'
                     + 'rating: ' + value[1]
-            }
+            },
+            position: 'right',
         },
         dataZoom: {
             type: 'slider'
@@ -154,10 +155,11 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
             }
         },
         tooltip: {
-            trigger: 'axis',
+            trigger: 'item',
             axisPointer: {
                 type: 'shadow'
-            }
+            },
+            position: 'right',
         },
         grid: {
             bottom: 90
@@ -169,7 +171,8 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
         }],
         xAxis: {
             // data: data,
-            type: 'category',
+            type: 'value',
+            // type: 'category',
             silent: false,
             splitLine: {
                 show: false
@@ -177,8 +180,8 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url, sum) {
             splitArea: {
                 show: false
             },
-            // minInterval: 100,
-            // interval: 100,
+            minInterval: 100,
+            interval: 100,
         },
         yAxis: {
             splitArea: {
