@@ -4,9 +4,11 @@
 
 - 在一个网页中查看friends的各个Online Judge的rating情况
 
-- 查看Codeforces的情况
+- 查看Codeforces的比赛和做题情况
 
-- 查看AtCoder的情况
+- 查看AtCoder的比赛情况
+
+- 查看牛客网的比赛情况
 
 - 点击Rating列的表头可以进行排序
 

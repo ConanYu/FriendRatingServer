@@ -20,16 +20,20 @@
                 <td>姓名</td>
                 <td>年级</td>
                 <td>Codeforces ID</td>
-                <td @click="sortCol('codeforces')">Codeforces Rating {{ codeforces_rating_mark }}</td>
+                <td @click="sortRatingCol('codeforces')">Codeforces Rating {{ codeforces_rating_mark }}</td>
                 <td>Codeforces 场次</td>
+                <td @click="sortSubmitCol('codeforces')">Codeforces 做题数</td>
                 <td>AtCoder ID</td>
-                <td @click="sortCol('atcoder')">AtCoder Rating {{ atcoder_rating_mark }}</td>
+                <td @click="sortRatingCol('atcoder')">AtCoder Rating {{ atcoder_rating_mark }}</td>
                 <td>AtCoder 场次</td>
-                <td @click="sortCol('nowcoder')">牛客网Rating</td>
+                <td @click="sortRatingCol('nowcoder')">牛客网Rating</td>
                 <td>牛客网场次</td>
             </tr>
             </thead>
             <tbody>
+                <div v-if="is_loading">
+                    数据爬取中，请稍等片刻。。
+                </div>
                 <template v-for="member in members">
                     <tr class="hover-cursor-hand" @click="showRow(member.index)">
                         <td>${ member.name }$</td>
@@ -37,6 +41,7 @@
                         <td class="member-id" :style="'color: ' + getCodeforcesRatingColor(table[member.index].codeforces_contest.rating)">${ member.codeforces }$</td>
                         <td :style="'color: ' + getCodeforcesRatingColor(table[member.index].codeforces_contest.rating)">${ table[member.index].codeforces_contest.rating }$</td>
                         <td>${ table[member.index].codeforces_contest.length }$</td>
+                        <td>${ table[member.index].codeforces_submit.accept_count }$/${ table[member.index].codeforces_submit.submit_count }$</td>
                         <td class="member-id" :style="'color: ' + getAtcoderRatingColor(table[member.index].atcoder_contest.rating)">${ member.atcoder }$</td>
                         <td :style="'color: ' + getAtcoderRatingColor(table[member.index].atcoder_contest.rating)">${ table[member.index].atcoder_contest.rating }$</td>
                         <td>${ table[member.index].atcoder_contest.length }$</td>

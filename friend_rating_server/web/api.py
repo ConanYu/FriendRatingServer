@@ -5,8 +5,8 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from friend_rating_server.util.rsa_checker import RSAChecker
 from friend_rating_server.util.config import get_config, reload_config as reload
-from friend_rating_server.data.data import ATCODER_RATING_CACHE, CODEFORCES_RATING_CACHE, NOWCODER_RATING_CACHE
-
+from friend_rating_server.data.data \
+    import ATCODER_RATING_CACHE, CODEFORCES_RATING_CACHE, NOWCODER_RATING_CACHE, CODEFORCES_SUBMIT_CACHE
 
 EXPIRE_RSA_CHECKER = RSAChecker()
 
@@ -57,6 +57,12 @@ def get_nowcoder_data(request: WSGIRequest):
     return HttpResponse(json.dumps(result))
 
 
+def get_codeforces_submit_data(request: WSGIRequest):
+    handle = request.GET.get('handle', '')
+    result = CODEFORCES_SUBMIT_CACHE.get(handle)
+    return HttpResponse(json.dumps(result))
+
+
 def get_all_data_source(request: WSGIRequest) -> dict:
     codeforces = request.GET.get('codeforces', '')
     atcoder = request.GET.get('atcoder', '')
@@ -65,6 +71,7 @@ def get_all_data_source(request: WSGIRequest) -> dict:
         "codeforces_contest": CODEFORCES_RATING_CACHE.get(codeforces),
         "atcoder_contest": ATCODER_RATING_CACHE.get(atcoder),
         "nowcoder_contest": NOWCODER_RATING_CACHE.get(nowcoder),
+        "codeforces_submit": CODEFORCES_SUBMIT_CACHE.get(codeforces),
     }
 
 

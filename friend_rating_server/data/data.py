@@ -1,14 +1,15 @@
-from typing import List
 import logging
 from friend_rating_server.util.config import get_config
 from friend_rating_server.util.scheduler_cache import SchedulerCache
-from friend_rating_server.crawler.atcoder.get_atcoder_contest_data import get_atcoder_contest_data as get_atcoder_rating
-from friend_rating_server.crawler.codeforces.get_codeforces_contest_data import get_codeforces_contest_data as get_codeforces_rating
-from friend_rating_server.crawler.nowcoder.get_nowcoder_contest_data import get_nowcoder_contest_data as get_nowcoder_rating
+from friend_rating_server.crawler.atcoder.get_atcoder_contest_data import get_atcoder_contest_data
+from friend_rating_server.crawler.codeforces.get_codeforces_contest_data import get_codeforces_contest_data
+from friend_rating_server.crawler.codeforces.get_codeforces_submit_data import get_codeforces_submit_data
+from friend_rating_server.crawler.nowcoder.get_nowcoder_contest_data import get_nowcoder_contest_data
 
-ATCODER_RATING_CACHE = SchedulerCache(get_atcoder_rating)
-CODEFORCES_RATING_CACHE = SchedulerCache(get_codeforces_rating)
-NOWCODER_RATING_CACHE = SchedulerCache(get_nowcoder_rating)
+ATCODER_RATING_CACHE = SchedulerCache(get_atcoder_contest_data)
+CODEFORCES_RATING_CACHE = SchedulerCache(get_codeforces_contest_data)
+NOWCODER_RATING_CACHE = SchedulerCache(get_nowcoder_contest_data)
+CODEFORCES_SUBMIT_CACHE = SchedulerCache(get_codeforces_submit_data)
 
 
 def get_member() -> list:
