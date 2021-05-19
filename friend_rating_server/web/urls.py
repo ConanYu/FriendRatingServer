@@ -29,5 +29,8 @@ urlpatterns = [
     url('^api/get_nowcoder_data$', api.get_nowcoder_data),
     url('^api/get_all_data$', api.get_all_data),
     url('^api/get_all_data_simple$', api.get_all_data_simple),
+    url('^api/get_members$', api.get_members),
+    url('^api/delete_member$', api.delete_member),
+    url('^api/add_member$', api.add_member),
     url(r'^static/(?P<path>.*)$', static.serve, {'document_root': settings.STATIC_ROOT}),
 ]

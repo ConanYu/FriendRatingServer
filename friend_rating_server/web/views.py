@@ -19,11 +19,10 @@ def admin_post(request: WSGIRequest):
     form = LoginForm(request.POST)
     if form.is_valid():
         password = form.cleaned_data.get('password')
-        print(type(get_config('admin.password', 0)))
         if password == get_config('admin.password', 0):
             expire_time = datetime.datetime.now() + datetime.timedelta(hours=1)
             time_msg = (f'{expire_time.year},{expire_time.month},{expire_time.day},'
-                       f'{expire_time.hour},{expire_time.minute},{expire_time.second}')
+                        f'{expire_time.hour},{expire_time.minute},{expire_time.second}')
             cookie = EXPIRE_RSA_CHECKER.encrypt(time_msg)
             user = True
             response = render(request, 'admin.html', locals())
@@ -32,7 +31,7 @@ def admin_post(request: WSGIRequest):
             return response
     message = "密码错误"
     user = False
-    return render(request, 'admin.html', locals())
+    return render(request, 'admin_login.html', locals())
 
 
 def admin(request: WSGIRequest):
@@ -43,4 +42,5 @@ def admin(request: WSGIRequest):
     members = []
     if user:
         members = get_config("members")
-    return render(request, 'admin.html', locals())
+        return render(request, 'admin.html', locals())
+    return render(request, 'admin_login.html', locals())

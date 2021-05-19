@@ -1,11 +1,4 @@
-members:
-  - name: 余梓宁
-    grade: 2017
-    codeforces: ConanYu
-    atcoder: ConanYu
-    nowcoder: 6693394
-  - name: 覃浩
-    grade: 2018
-    codeforces: cppisgood
-    atcoder: cppisgood
-    nowcoder: 861349648
+admin:
+  cookie_key: admin_token
+  password: '123456'
+members: []
