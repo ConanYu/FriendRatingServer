@@ -15,7 +15,7 @@
 
 - 点击Rating列的表头可以进行排序
 
-- 一个管理friends的网页
+- 一个管理friends的网页（url: `/admin`）
 
 ## 未来会实现的功能
 
