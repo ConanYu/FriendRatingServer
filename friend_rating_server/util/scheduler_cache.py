@@ -1,5 +1,6 @@
 import logging
 import threading
+from copy import deepcopy
 from apscheduler.schedulers.blocking import BlockingScheduler
 from readerwriterlock import rwlock
 from friend_rating_server.util.config import get_config
@@ -30,10 +31,7 @@ class SchedulerCache(object):
                     self.data.clear()
                 self.data[key] = value
         logging.debug(self.data)
-        try:
-            return value.copy()
-        except AttributeError:
-            return value
+        return deepcopy(value)
 
     def __gao(self):
         logging.info("__gao start")

@@ -13,7 +13,7 @@ generateGraph(document.getElementById('main'), [
 */
 function generateGraph(dom, data, oj_name, username, user_info_url) {
     // 基于准备好的dom，初始化echarts实例
-    console.log(dom);
+    // console.log(dom);
     let myChart = echarts.init(dom);
 
     // function unixstampToDate(time) {
@@ -139,12 +139,12 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
         window.open(params.value[4]);
     });
 
-    console.log(option);
+    // console.log(option);
     myChart.setOption(option, true);
 }
 
 function generateLineGraph(dom, data, oj_name, username, user_info_url) {
-    console.log(dom);
+    // console.log(dom);
     let myChart = echarts.init(dom);
     let min_val = null;
     let max_val = null;
@@ -245,6 +245,6 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url) {
             
         },
     };
-    console.log(option);
+    // console.log(option);
     myChart.setOption(option, true);
 }

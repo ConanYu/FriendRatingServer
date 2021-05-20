@@ -12,7 +12,7 @@ let platforms = [
     "codeforces",
     "atcoder",
     "nowcoder",
-    "codeforces_submit"
+    "codeforces_submit",
 ];
 
 let httpGetPromise = [];
