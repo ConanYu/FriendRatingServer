@@ -9,3 +9,14 @@ members:
     codeforces: cppisgood
     atcoder: cppisgood
     nowcoder: 861349648
+  - name: lxd
+    grade: 2020
+    codeforces: linxd
+    atcoder: linxd
+  - name: tourist
+    grade: 2020
+    codeforces: tourist
+    atcoder: tourist
+
+django:
+  secret_key: django-insecure-e4#d4_uc491@p8#jch^r(48d*k(=9(vn-7!1dpar+z5xy2uh8k
