@@ -31,6 +31,7 @@ new Vue({
                 "codeforces": app_data.add_member.codeforces,
                 "atcoder": app_data.add_member.atcoder,
                 "nowcoder": app_data.add_member.nowcoder,
+                "luogu": app_data.add_member.luogu,
             })).then(res => {
                 location.reload();
             }).catch(err => {

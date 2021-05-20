@@ -13,6 +13,8 @@ let platforms = [
     "atcoder",
     "nowcoder",
     "codeforces_submit",
+    "luogu_submit",
+    "luogu",
 ];
 
 let httpGetPromise = [];
@@ -82,7 +84,7 @@ function loadSubmitGraph(data, index, platform) {
         for (let point in distribution) {
             arr.push([parseInt(point, 10), distribution[point]]);
         }
-        generateLineGraph(document.getElementById(graph_id), arr, 'codeforces', data.handle, data.profile_url);
+        generateLineGraph(document.getElementById(graph_id), arr, platform, data.handle, data.profile_url);
     }
 }
 

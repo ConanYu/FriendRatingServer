@@ -27,6 +27,7 @@ urlpatterns = [
     url('^api/get_codeforces_data$', api.get_codeforces_data),
     url('^api/get_codeforces_submit_data$', api.get_codeforces_submit_data),
     url('^api/get_nowcoder_data$', api.get_nowcoder_data),
+    url('^api/get_luogu_submit_data$', api.get_luogu_submit_data),
     url('^api/get_all_data$', api.get_all_data),
     url('^api/get_all_data_simple$', api.get_all_data_simple),
     url('^api/get_members$', api.get_members),
