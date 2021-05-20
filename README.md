@@ -2,21 +2,24 @@
 
 ## 已经实现的功能
 
-- 在一个网页中查看friends的各个Online Judge的rating情况
+- 在网页中查看friends的各个Online Judge的情况
 
-- 查看Codeforces的比赛和做题情况
-
-- 查看AtCoder的比赛情况
-
-- 查看牛客网的比赛情况
-
-- 点击Rating列的表头可以进行排序
+|OnlineJudge|比赛情况|做题情况|
+|----|----|----|
+|CodeForces|√|√|
+|AtCoder|√| |
+|牛客网|√| |
+|洛谷| |√|
 
 ![](friend_rating_server/static/1.png)
 
-## 未来会实现的功能
+- 点击Rating列的表头可以进行排序
 
 - 一个管理friends的网页
+
+## 未来会实现的功能
+
+- 更多OJ支持
 
 ## 部署
 
