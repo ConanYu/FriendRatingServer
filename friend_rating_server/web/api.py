@@ -6,8 +6,12 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotAll
 from django.views.decorators.csrf import csrf_exempt
 from friend_rating_server.util.rsa_checker import RSAChecker
 from friend_rating_server.util.config import get_config, set_config, reload_config as reload
-from friend_rating_server.data.data \
-    import ATCODER_RATING_CACHE, CODEFORCES_RATING_CACHE, NOWCODER_RATING_CACHE, CODEFORCES_SUBMIT_CACHE
+from friend_rating_server.data.data import \
+    ATCODER_RATING_CACHE, \
+    CODEFORCES_RATING_CACHE, \
+    NOWCODER_RATING_CACHE, \
+    CODEFORCES_SUBMIT_CACHE, \
+    LUOGU_SUBMIT_CACHE
 from friend_rating_server.data.data import get_member as get_members_from_config
 
 EXPIRE_RSA_CHECKER = RSAChecker()
@@ -65,15 +69,23 @@ def get_codeforces_submit_data(request: WSGIRequest):
     return HttpResponse(json.dumps(result))
 
 
+def get_luogu_submit_data(request: WSGIRequest):
+    handle = request.GET.get('handle', '')
+    result = LUOGU_SUBMIT_CACHE.get(handle)
+    return HttpResponse(json.dumps(result))
+
+
 def get_all_data_source(request: WSGIRequest) -> dict:
     codeforces = request.GET.get('codeforces', '')
     atcoder = request.GET.get('atcoder', '')
     nowcoder = request.GET.get('nowcoder', '')
+    luogu = request.GET.get('luogu', '')
     return {
         "codeforces_contest": CODEFORCES_RATING_CACHE.get(codeforces),
         "atcoder_contest": ATCODER_RATING_CACHE.get(atcoder),
         "nowcoder_contest": NOWCODER_RATING_CACHE.get(nowcoder),
         "codeforces_submit": CODEFORCES_SUBMIT_CACHE.get(codeforces),
+        "luogu_submit": LUOGU_SUBMIT_CACHE.get(luogu),
     }
 
 
@@ -130,6 +142,7 @@ def add_member(request: WSGIRequest):
         codeforces = request.POST.get("codeforces")
         atcoder = request.POST.get("atcoder")
         nowcoder = request.POST.get("nowcoder")
+        luogu = request.POST.get("luogu")
         if name is None or name == '':
             return HttpResponseBadRequest()
         res = {
@@ -139,6 +152,7 @@ def add_member(request: WSGIRequest):
         dict_push_item(res, 'codeforces', codeforces)
         dict_push_item(res, 'atcoder', atcoder)
         dict_push_item(res, 'nowcoder', nowcoder)
+        dict_push_item(res, 'luogu', luogu)
         conf["members"].append(res)
         set_config(conf)
         return HttpResponse(json.dumps({
