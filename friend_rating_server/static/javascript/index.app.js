@@ -162,12 +162,18 @@ Promise.all(httpGetPromise).then((value => {
                 app_data.show["graph_" + index + "_show"] = !is_show_before;
             },
             sortRatingCol: function (platform) {
-                app_data.members.sort(function (a, b) {
-                    return app_data.table[a.index][platform + "_contest"].rating -
-                        app_data.table[b.index][platform + "_contest"].rating;
-                });
+                app_data.members = mergeSort(app_data.members, function (a, b) {
+                    let c = app_data.table[a.index][platform + "_contest"].rating;
+                    let d = app_data.table[b.index][platform + "_contest"].rating;
+                    if (c === undefined) {
+                        c = 0;
+                    }
+                    if (d === undefined) {
+                        d = 0;
+                    }
+                    return c - d;
+                }, app_data.sortStatus !== platform + "_contest_desc");
                 if (app_data.sortStatus !== platform + "_contest_desc") {
-                    app_data.members.reverse();
                     app_data.sortStatus = platform + "_contest_desc";
                 } else {
                     app_data.sortStatus = platform + "_contest_inc";
@@ -179,12 +185,18 @@ Promise.all(httpGetPromise).then((value => {
                 }
             },
             sortSubmitCol: function (platform) {
-                app_data.members.sort(function (a, b) {
-                    return app_data.table[a.index][platform + "_submit"].accept_count -
-                        app_data.table[b.index][platform + "_submit"].accept_count;
-                });
+                app_data.members = mergeSort(app_data.members, function (a, b) {
+                    let c = app_data.table[a.index][platform + "_submit"].accept_count;
+                    let d = app_data.table[b.index][platform + "_submit"].accept_count;
+                    if (c === undefined) {
+                        c = 0;
+                    }
+                    if (d === undefined) {
+                        d = 0;
+                    }
+                    return c - d;
+                }, app_data.sortStatus !== platform + "_submit_desc");
                 if (app_data.sortStatus !== platform + "_submit_desc") {
-                    app_data.members.reverse();
                     app_data.sortStatus = platform + "_submit_desc";
                 } else {
                     app_data.sortStatus = platform + "_submit_inc";
