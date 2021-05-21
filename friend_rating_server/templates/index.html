@@ -45,7 +45,7 @@
                         <td class="member-id" :style="'color: ' + getAtcoderRatingColor(table[member.index].atcoder_contest.rating)">${ member.atcoder }$</td>
                         <td :style="'color: ' + getAtcoderRatingColor(table[member.index].atcoder_contest.rating)">${ table[member.index].atcoder_contest.rating }$</td>
                         <td>${ table[member.index].atcoder_contest.length }$</td>
-                        <td>${ table[member.index].nowcoder_contest.rating }$</td>
+                        <td :style="'color: ' + getNowcoderRatingColor(table[member.index].nowcoder_contest.rating)">${ table[member.index].nowcoder_contest.rating }$</td>
                         <td>${ table[member.index].nowcoder_contest.length }$</td>
                         <td>${ table[member.index].luogu_submit.accept_count }$/${ table[member.index].luogu_submit.submit_count }$</td>
                     </tr>
@@ -71,6 +71,7 @@
     <script>
         let members = {{ members_json | safe }};
     </script>
+    <script src="../static/javascript/merge-sort.js"></script>
     <script src="../static/javascript/index.app.js"></script>
 </body>
 </html>
