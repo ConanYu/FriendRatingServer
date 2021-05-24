@@ -248,3 +248,53 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url) {
     // console.log(option);
     myChart.setOption(option, true);
 }
+
+
+function generatePieGraph(dom, data, oj_name, username, user_info_url) {
+    let myChart = echarts.init(dom);
+
+    let sum = 0;
+    for (let item of data) {
+        sum += item.value;
+    }
+
+    let option = {
+        title: {
+            text: username,
+            subtext: 'vjudge做题分布\n\n总题数: ' + sum,
+            link: user_info_url,
+        },
+
+        tooltip: {
+            trigger: 'item',
+            formatter: function (obj) {
+                let value = obj.value;
+                return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                    + 'OJ: ' + obj.name + '<br>'
+                    + '过题数: ' + value + '<br>'
+                    + '占比: ' + obj.percent + '%'
+            },
+        },
+        legend: {
+            top: '10%',
+            left: 'center',
+        },
+        series: [
+            {
+                selectedMode: 'single',
+                name: oj_name,
+                type: 'pie',
+                radius: '50%',
+                data: data,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    myChart.setOption(option, true);
+}
