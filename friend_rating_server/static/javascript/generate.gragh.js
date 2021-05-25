@@ -250,7 +250,7 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url) {
 }
 
 
-function generatePieGraph(dom, data, oj_name, username, user_info_url) {
+function generatePieGraph(dom, data, username, user_info_url) {
     let myChart = echarts.init(dom);
 
     let sum = 0;
@@ -282,7 +282,7 @@ function generatePieGraph(dom, data, oj_name, username, user_info_url) {
         series: [
             {
                 selectedMode: 'single',
-                name: oj_name,
+                // name: oj_name,
                 type: 'pie',
                 radius: '50%',
                 data: data,
