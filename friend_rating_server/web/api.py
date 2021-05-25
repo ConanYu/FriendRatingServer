@@ -11,7 +11,8 @@ from friend_rating_server.data.data import \
     CODEFORCES_RATING_CACHE, \
     NOWCODER_RATING_CACHE, \
     CODEFORCES_SUBMIT_CACHE, \
-    LUOGU_SUBMIT_CACHE
+    LUOGU_SUBMIT_CACHE, \
+    VJUDGE_SUBMIT_CACHE
 from friend_rating_server.data.data import get_member as get_members_from_config
 
 EXPIRE_RSA_CHECKER = RSAChecker()
@@ -75,17 +76,25 @@ def get_luogu_submit_data(request: WSGIRequest):
     return HttpResponse(json.dumps(result))
 
 
+def get_vjudge_sumbit_data(request: WSGIRequest):
+    handle = request.GET.get('handle', '')
+    result = VJUDGE_SUBMIT_CACHE.get(handle)
+    return HttpResponse(json.dumps(result))
+
+
 def get_all_data_source(request: WSGIRequest) -> dict:
     codeforces = request.GET.get('codeforces', '')
     atcoder = request.GET.get('atcoder', '')
     nowcoder = request.GET.get('nowcoder', '')
     luogu = request.GET.get('luogu', '')
+    vjudge = request.GET.get('vjudge', '')
     return {
         "codeforces_contest": CODEFORCES_RATING_CACHE.get(codeforces),
         "atcoder_contest": ATCODER_RATING_CACHE.get(atcoder),
         "nowcoder_contest": NOWCODER_RATING_CACHE.get(nowcoder),
         "codeforces_submit": CODEFORCES_SUBMIT_CACHE.get(codeforces),
         "luogu_submit": LUOGU_SUBMIT_CACHE.get(luogu),
+        "vjudge_submit": VJUDGE_SUBMIT_CACHE.get(vjudge),
     }
 
 
@@ -143,6 +152,7 @@ def add_member(request: WSGIRequest):
         atcoder = request.POST.get("atcoder")
         nowcoder = request.POST.get("nowcoder")
         luogu = request.POST.get("luogu")
+        vjudge = request.POST.get("vjudge")
         if name is None or name == '':
             return HttpResponseBadRequest()
         res = {
@@ -153,6 +163,7 @@ def add_member(request: WSGIRequest):
         dict_push_item(res, 'atcoder', atcoder)
         dict_push_item(res, 'nowcoder', nowcoder)
         dict_push_item(res, 'luogu', luogu)
+        dict_push_item(res, 'vjudge', vjudge)
         conf["members"].append(res)
         set_config(conf)
         return HttpResponse(json.dumps({
