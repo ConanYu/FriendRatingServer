@@ -6,12 +6,14 @@ from friend_rating_server.crawler.codeforces.get_codeforces_contest_data import 
 from friend_rating_server.crawler.codeforces.get_codeforces_submit_data import get_codeforces_submit_data
 from friend_rating_server.crawler.nowcoder.get_nowcoder_contest_data import get_nowcoder_contest_data
 from friend_rating_server.crawler.luogu.get_luogu_submit_data import get_luogu_submit_data
+from friend_rating_server.crawler.vjudge.get_vjudge_submit_data import get_vjudge_submit_data
 
 ATCODER_RATING_CACHE = SchedulerCache(get_atcoder_contest_data)
 CODEFORCES_RATING_CACHE = SchedulerCache(get_codeforces_contest_data)
 NOWCODER_RATING_CACHE = SchedulerCache(get_nowcoder_contest_data)
 CODEFORCES_SUBMIT_CACHE = SchedulerCache(get_codeforces_submit_data)
 LUOGU_SUBMIT_CACHE = SchedulerCache(get_luogu_submit_data)
+VJUDGE_SUBMIT_CACHE = SchedulerCache(get_vjudge_submit_data)
 
 
 def get_member() -> list:

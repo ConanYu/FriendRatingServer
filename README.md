@@ -10,6 +10,7 @@
 |AtCoder|√| |
 |牛客网|√| |
 |洛谷| |√|
+|vjudge| |√|
 
 ![](friend_rating_server/static/1.png)
 
