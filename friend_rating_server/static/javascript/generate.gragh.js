@@ -242,7 +242,7 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url) {
             inRange: {
                 color: ['green', 'red']
             }
-            
+
         },
     };
     // console.log(option);
@@ -257,8 +257,11 @@ function generatePieGraph(dom, data, username, user_info_url) {
     for (let item of data) {
         sum += item.value;
     }
-
+    data.sort(function(lhs, rhs) {
+        return lhs.value - rhs.value;
+    });
     let option = {
+
         title: {
             text: username,
             subtext: 'vjudge做题分布\n\n总题数: ' + sum,
@@ -275,16 +278,20 @@ function generatePieGraph(dom, data, username, user_info_url) {
                     + '占比: ' + obj.percent + '%'
             },
         },
-        legend: {
-            top: '10%',
-            left: 'center',
-        },
+        // legend: {
+        //     top: '10%',
+        //     left: 'center',
+        // },
+
         series: [
             {
+                // center: ['40%', '50%'],
+                // minAngle: 10,
+                minShowLabelAngle: 5,
                 selectedMode: 'single',
                 // name: oj_name,
                 type: 'pie',
-                radius: '50%',
+                radius: '70%',
                 data: data,
                 emphasis: {
                     itemStyle: {
