@@ -1,22 +1,24 @@
-members:
-  - name: 余梓宁
-    grade: 2017
-    codeforces: ConanYu
-    atcoder: ConanYu
-    nowcoder: 6693394
-  - name: 覃浩
-    grade: 2018
-    codeforces: cppisgood
-    atcoder: cppisgood
-    nowcoder: 861349648
-  - name: lxd
-    grade: 2020
-    codeforces: linxd
-    atcoder: linxd
-  - name: tourist
-    grade: 2020
-    codeforces: tourist
-    atcoder: tourist
+# 记得修改admin的密码
+admin:
+  cookie_key: admin_token
+  password: '123456'
 
-django:
-  secret_key: django-insecure-e4#d4_uc491@p8#jch^r(48d*k(=9(vn-7!1dpar+z5xy2uh8k
+# 成员 可以不填写完整数据 name必填
+members:
+  - atcoder: ConanYu
+    codeforces: ConanYu
+    grade: 2017
+    name: ConanYu
+    luogu: YuZining
+    vjudge: ConanYu
+    nowcoder: 6693394
+
+# proxy 需要的可以填写 可以填写socks5的url
+proxies:
+  http: ~
+  https: ~
+
+# 以下为必填项
+vjudge:
+  password: ~
+  username: ~
