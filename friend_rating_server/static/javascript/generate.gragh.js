@@ -15,7 +15,8 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
     // 基于准备好的dom，初始化echarts实例
     // console.log(dom);
     let myChart = echarts.init(dom);
-
+    myChart.dispose();
+    myChart = echarts.init(dom);
     // function unixstampToDate(time) {
     //     console.log(new Date(time * 1000).toLocaleDateString().replaceAll('/', '-'))
     //     return new Date(time * 1000).toLocaleDateString().replaceAll('/', '-');
@@ -146,6 +147,8 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
 function generateLineGraph(dom, data, oj_name, username, user_info_url) {
     // console.log(dom);
     let myChart = echarts.init(dom);
+    myChart.dispose();
+    myChart = echarts.init(dom);
     let min_val = null;
     let max_val = null;
     if (data.length !== 0) {
@@ -252,7 +255,8 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url) {
 
 function generatePieGraph(dom, data, username, user_info_url) {
     let myChart = echarts.init(dom);
-
+    myChart.dispose();
+    myChart = echarts.init(dom);
     let sum = 0;
     for (let item of data) {
         sum += item.value;
