@@ -10,6 +10,7 @@
 |AtCoder|√| |
 |牛客网|√| |
 |洛谷| |√|
+|vjudge| |√|
 
 ![](friend_rating_server/static/1.png)
 
@@ -27,12 +28,18 @@
 
 ### Python3安装
 
+略
+
 ### 相关库安装
 
 `pip install -r requirements.txt`
 
 ### 运行
 
-Windows下直接打开run_server.bat即可。
+运行前首先要修改配置文件（config.yml）。
+
+修改完成后Windows下直接打开windows_script/run_server.bat即可。
 
 Linux下手动将run_server.sh中的python改成python3后，调用`sh run_server.sh`即可。
+
+端口可自行在bat/shell文件修改。

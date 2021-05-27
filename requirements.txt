@@ -6,6 +6,7 @@ Django==3.2.2
 idna==2.10
 lxml==4.6.3
 pyasn1==0.4.8
+PySocks==1.7.1
 pytz==2021.1
 PyYAML==5.4.1
 readerwriterlock==1.0.8

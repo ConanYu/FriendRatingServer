@@ -15,6 +15,8 @@ let platforms = [
     "codeforces_submit",
     "luogu_submit",
     "luogu",
+    "vjudge",
+    "vjudge_submit",
 ];
 
 let httpGetPromise = [];
@@ -88,6 +90,22 @@ function loadSubmitGraph(data, index, platform) {
     }
 }
 
+function loadSubmitPieGraph(data, index, platform) {
+    let graph_id = "graph-" + index + "-" + platform + "_submit";
+    if (data.status === 'OK') {
+        let distribution = data.data.oj_distribution;
+        let arr = [];
+        for (let value in distribution) {
+            arr.push({
+                value: distribution[value.valueOf()],
+                name: value.valueOf(),
+            });
+        }
+        console.log(arr);
+        generatePieGraph(document.getElementById(graph_id), arr, data.handle, data.profile_url);
+    }
+}
+
 function showInit(ignore) {
     for (let key in app_data.show) {
         app_data.show[key.valueOf()] = false;
@@ -152,6 +170,24 @@ Promise.all(httpGetPromise).then((value => {
                             },
                         }).then((res) => {
                             loadSubmitGraph(res.data, index, platform);
+                        });
+                    });
+                }
+            },
+            showSubmitPieGraph: function (index, platform) {
+                let is_show_before = app_data.show["graph_" + index + "_" + platform + "_submit_show"];
+                showInit();
+                app_data.show["graph_" + index + "_show"] = true;
+                app_data.show["graph_" + index + "_" + platform + "_submit_show"] = !is_show_before;
+                if (!is_show_before) {
+                    app_data.cls["btn_" + index + "_" + platform + "_submit"] += " btn-success";
+                    this.$nextTick(function () {
+                        axios.get('/api/get_' + platform + "_submit_data", {
+                            params: {
+                                handle: app_data.members[app_data.dict[index]][platform],
+                            },
+                        }).then((res) => {
+                            loadSubmitPieGraph(res.data, index, platform);
                         });
                     });
                 }

@@ -28,6 +28,7 @@
                 <td @click="sortRatingCol('nowcoder')">牛客网Rating</td>
                 <td>牛客网场次</td>
                 <td @click="sortSubmitCol('luogu')">洛谷做题数</td>
+                <td @click="sortSubmitCol('vjudge')">vjudge做题数</td>
             </tr>
             </thead>
             <tbody>
@@ -48,6 +49,7 @@
                         <td :style="'color: ' + getNowcoderRatingColor(table[member.index].nowcoder_contest.rating)">${ table[member.index].nowcoder_contest.rating }$</td>
                         <td>${ table[member.index].nowcoder_contest.length }$</td>
                         <td>${ table[member.index].luogu_submit.accept_count }$/${ table[member.index].luogu_submit.submit_count }$</td>
+                        <td>${ table[member.index].vjudge_submit.accept_count }$/${ table[member.index].vjudge_submit.submit_count }$</td>
                     </tr>
                     <tr v-show="show['graph_' + member.index + '_show']">
                         <td colspan="12">
@@ -56,12 +58,14 @@
                             <button type="button" :class="cls['btn_' + member.index + '_atcoder']" @click="showGraph(member.index, 'atcoder')">AtCoder</button>
                             <button type="button" :class="cls['btn_' + member.index + '_nowcoder']" @click="showGraph(member.index, 'nowcoder')">NowCoder</button>
                             <button type="button" :class="cls['btn_' + member.index + '_luogu_submit']" @click="showSubmitGraph(member.index, 'luogu')">洛谷做题情况</button>
+                            <button type="button" :class="cls['btn_' + member.index + '_vjudge_submit']" @click="showSubmitPieGraph(member.index, 'vjudge')">vjudge做题情况</button>
                             <div style="margin: 10px"></div>
                             <div style="width: 600px; height: 400px;" :id="'graph-' + member.index + '-codeforces'" v-if="show['graph_' + member.index + '_codeforces_show']"></div>
                             <div style="width: 600px; height: 400px;" :id="'graph-' + member.index + '-codeforces_submit'" v-if="show['graph_' + member.index + '_codeforces_submit_show']"></div>
                             <div style="width: 600px; height: 400px;" :id="'graph-' + member.index + '-atcoder'" v-if="show['graph_' + member.index + '_atcoder_show']"></div>
                             <div style="width: 600px; height: 400px;" :id="'graph-' + member.index + '-nowcoder'" v-if="show['graph_' + member.index + '_nowcoder_show']"></div>
                             <div style="width: 600px; height: 400px;" :id="'graph-' + member.index + '-luogu_submit'" v-if="show['graph_' + member.index + '_luogu_submit_show']"></div>
+                            <div style="width: 600px; height: 400px;" :id="'graph-' + member.index + '-vjudge_submit'" v-if="show['graph_' + member.index + '_vjudge_submit_show']"></div>
                         </td>
                     </tr>
                 </template>

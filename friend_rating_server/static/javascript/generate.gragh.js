@@ -15,7 +15,8 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
     // 基于准备好的dom，初始化echarts实例
     // console.log(dom);
     let myChart = echarts.init(dom);
-
+    myChart.dispose();
+    myChart = echarts.init(dom);
     // function unixstampToDate(time) {
     //     console.log(new Date(time * 1000).toLocaleDateString().replaceAll('/', '-'))
     //     return new Date(time * 1000).toLocaleDateString().replaceAll('/', '-');
@@ -146,6 +147,8 @@ function generateGraph(dom, data, oj_name, username, user_info_url) {
 function generateLineGraph(dom, data, oj_name, username, user_info_url) {
     // console.log(dom);
     let myChart = echarts.init(dom);
+    myChart.dispose();
+    myChart = echarts.init(dom);
     let min_val = null;
     let max_val = null;
     if (data.length !== 0) {
@@ -242,9 +245,67 @@ function generateLineGraph(dom, data, oj_name, username, user_info_url) {
             inRange: {
                 color: ['green', 'red']
             }
-            
+
         },
     };
     // console.log(option);
+    myChart.setOption(option, true);
+}
+
+
+function generatePieGraph(dom, data, username, user_info_url) {
+    let myChart = echarts.init(dom);
+    myChart.dispose();
+    myChart = echarts.init(dom);
+    let sum = 0;
+    for (let item of data) {
+        sum += item.value;
+    }
+    data.sort(function(lhs, rhs) {
+        return lhs.value - rhs.value;
+    });
+    let option = {
+
+        title: {
+            text: username,
+            subtext: 'vjudge做题分布\n\n总题数: ' + sum,
+            link: user_info_url,
+        },
+
+        tooltip: {
+            trigger: 'item',
+            formatter: function (obj) {
+                let value = obj.value;
+                return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                    + 'OJ: ' + obj.name + '<br>'
+                    + '过题数: ' + value + '<br>'
+                    + '占比: ' + obj.percent + '%'
+            },
+        },
+        // legend: {
+        //     top: '10%',
+        //     left: 'center',
+        // },
+
+        series: [
+            {
+                // center: ['40%', '50%'],
+                // minAngle: 10,
+                minShowLabelAngle: 5,
+                selectedMode: 'single',
+                // name: oj_name,
+                type: 'pie',
+                radius: '70%',
+                data: data,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
     myChart.setOption(option, true);
 }
