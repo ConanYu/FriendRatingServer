@@ -22,6 +22,8 @@
 
 - 更多OJ支持
 
+- 排序后的标识
+
 ## 部署
 
 本项目Web端基于Django开发，前端基于Vue、Bootstrap、ECharts开发。
