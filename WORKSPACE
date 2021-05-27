@@ -11,3 +11,10 @@ git_repository(
     remote = "https://github.com/bazelbuild/rules_python.git",
     tag = "0.2.0",
 )
+
+load("@rules_python//python:pip.bzl", "pip_install")
+
+pip_install(
+   name = "friend_rating_server_deps",
+   requirements = "//:requirements.txt",
+)
