@@ -9,16 +9,14 @@
     {% include "static_files_load.html" %}
 </head>
 <body>
-    <form class="form-login" action="/admin" method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-              密码：
-              <input type="password" name="password" value="{{ form.password.values }}">
-        </div>
-        <div>
-          <button type="submit" class="btn btn-default">登录</button>
-        </div>
-    </form>
-    {{ message }}
+    <div class="login" style="margin: 10px">
+        <form class="form-login" action="/admin" method="POST">
+            {% csrf_token %}
+            <span>密码：</span>
+            <input type="password" name="password" value="{{ form.password.values }}">
+            <button type="submit" class="btn btn-sm border">登录</button>
+        </form>
+        {{ message }}
+    </div>
 </body>
 </html>
