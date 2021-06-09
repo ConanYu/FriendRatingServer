@@ -15,7 +15,7 @@ def get_nowcoder_contest_data(handle: Union[str, int]) -> dict:
         del obj["code"]
         obj["handle"] = str(handle)
         obj["length"] = len(obj["data"])
-        obj["profile_url"] = f"https://ac.nowcoder.com/acm/home/{handle}"
+        obj["profile_url"] = f"https://ac.nowcoder.com/acm/contest/profile/{handle}"
         if len(obj["data"]):
             obj["rating"] = int(obj["data"][-1]["rating"])
         for value in obj["data"]:
