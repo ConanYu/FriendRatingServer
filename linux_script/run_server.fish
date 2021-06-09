@@ -1,9 +1,11 @@
 cd (dirname (status --current-filename))
 cd ..
-switch (echo $PYTHONPATH | grep FriendRatingServer)
+set python_path (echo $PYTHONPATH | grep FriendRatingServer)
+switch (echo $python_path)
     case ""
         set -ax PYTHONPATH $PWD
 end
 
-python friend_rating_server/manage.py collectstatic
-python ./friend_rating_server/manage.py runserver localhost:8000
+pip3 install -r requirements.txt
+python3 friend_rating_server/manage.py collectstatic
+python3 ./friend_rating_server/manage.py runserver localhost:8000
